@@ -14,6 +14,7 @@ function LargeNav ()
 
                 <div className={ classes.Search }>
                     <input type="search" placeholder="Search gem ..." />
+                    <i className="fas fa-search"></i>
                 </div>
 
             </div>

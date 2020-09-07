@@ -25,19 +25,28 @@
 
 .Search
 {
-    background: transparent;
+    background: transparent;    
+    border: 1px solid var(--gold);
+    border-radius: 60px;
+    position: relative;
+    color: var(--gold);
 }
 
 .Search input
 {
     background: none;
     outline: none;
+    border:none;
     color: var(--gold);
-    border: 1px solid var(--gold);
-    border-radius: 60px;
     padding: 6px 12px;
     min-width: 250px;
+    font-size: 1.2rem;
+}
 
+.Search i
+{
+    font-size: 1.15rem;
+    cursor: pointer;
 }
 
 .Search input::-webkit-input-placeholder
