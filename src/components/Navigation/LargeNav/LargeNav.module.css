@@ -1,0 +1,110 @@
+.NavBar
+{
+    display: none;
+}
+
+@media screen and (min-width: 768px)
+{
+
+    .NavBar
+    {
+        position: fixed;
+        width: 100vw;
+        background-color: var(--nav-bg);
+        padding: 5px 12px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: var(--z);
+    }
+
+    .LogoSearch
+    {
+        display: grid;
+        grid-template-columns: 45px 1fr ;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .Logo
+    {
+        width: 100%;
+        height: 100%;
+    }
+
+    .Others
+    {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        min-width: 50%;
+        font-family: 'Revalia', cursive;
+    }
+
+    .Link
+    {
+        color: var(--gold);
+        position: relative;
+        padding: 5px 0 8px;
+    }
+
+    .Link::after
+    {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 2px;
+        width: 110%;
+        transform: translateX(-20%); 
+        opacity: 0;       
+        background-color:var(--purple);
+        transition: transform 0.2s ease-in-out, 
+                    opacity 0.2s ease-in-out;
+    }
+
+    .Link:hover::after,
+    .Link.Active::after
+    { 
+        transform: translateX(0%);
+        opacity: 1;
+
+    }
+
+    .Cart
+    {
+    position: relative; 
+    }
+
+    .Cart p
+    {
+        position: absolute;
+        color: #000;
+        top:50%;
+        left:50%;
+        transform: translate(-50%,-50%);
+    }
+
+    .Avatar
+    {
+        background-color: transparent;
+    }
+
+}
+
+
+@media screen and (min-width: 1000px)
+{
+    .Others
+    {
+        min-width: 45%;
+        margin-right: 5%;
+    }
+
+    .Link
+    { 
+        font-size: 1.15rem;
+    }
+
+}
