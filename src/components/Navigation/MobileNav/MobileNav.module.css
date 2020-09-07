@@ -1,0 +1,96 @@
+.TopNav
+{
+    position: fixed;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 5px;
+    width: 100vw;
+    padding: 5px  ;
+    background-color: var(--nav-bg);
+    justify-content: center;
+}
+
+.BottomNav
+{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    padding: 5px 10px ;
+    background-color: var(--nav-bg);
+    justify-content: center;
+}
+
+
+.BNWrap
+{
+    position: relative; 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.FooterIcon
+{
+    background: none;
+    height: 35px;
+    width: 35px;
+}
+
+
+.Link
+{
+     color: var(--gold);
+     position: relative;
+     padding: 5px 0 8px;
+     font-size: 1rem;
+    font-family: 'Revalia', cursive;
+}
+
+.Link::after
+{
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    width: 110%;
+    transform: translateX(-20%); 
+    opacity: 0;       
+    background-color:var(--purple);
+    transition: transform 0.2s ease-in-out, 
+                opacity 0.2s ease-in-out;
+}
+
+.Link:hover::after,
+.Link.Active::after
+{ 
+    transform: translateX(0%);
+    opacity: 1;
+}
+
+
+
+.LogoCurrency
+{
+    display: grid;
+    gap:10px;
+    grid-template-columns: 45px 1fr;  
+
+}
+
+.Logo
+{
+    width: 45px;
+    height: 45px;;
+}
+
+
+@media screen and (min-width: 768px)
+{
+    .NavMobile
+    {
+         display: none;
+    }
+}

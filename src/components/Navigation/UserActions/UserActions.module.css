@@ -1,11 +1,22 @@
+.MenuMobile,
 .Menu
 {
     position: absolute;
-    right: -5%;
-    top: calc(100% + 18px);
+    right: 0%;
     background-color: var(--nav-bg);
     border: 1px solid var(--gold);
     z-index: calc( 2 * var(--z));
+    font-family: 'Revalia', cursive;
+}
+
+.MenuMobile
+{
+    bottom: 55px;
+}
+
+.Menu
+{
+    top: calc(100% + 18px);
 }
 
 .MenuWrap
@@ -23,4 +34,33 @@
     margin: 10px 0;
     padding-bottom: 5px;
     border-bottom:  1px solid var(--gold);
+}
+
+.ArrowMobile,
+.ArrowLarge
+{
+    content: "";
+    position: absolute;   
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--gold);
+    border-radius: 4px;
+    transform: rotate(45deg);
+    background-color: var(--nav-bg);
+}
+
+.ArrowLarge
+{ 
+    top:-10px;
+    right: 10px;
+    border-bottom-color: transparent;
+    border-right-color: transparent;
+}
+
+.ArrowMobile
+{
+    bottom:-10px;
+    right: 10px;
+    border-top-color: transparent;
+    border-left-color: transparent;
 }

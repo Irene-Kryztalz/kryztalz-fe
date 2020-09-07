@@ -1,0 +1,77 @@
+.Search
+{
+    background: transparent;
+    border: 1px solid var(--gold);
+    border-radius: 60px;
+    position: relative;
+    color: var(--gold);
+    width: 90vw;
+    max-width: 500px;
+    align-self: center;
+    margin: auto;
+}
+
+.Search input
+{
+    background: none;
+    width: 100%;
+    height: 100%;
+    outline: none;
+    border:none;
+    color: var(--gold);
+    padding: 6px 10px;
+    min-width: 200px;
+    font-size: 1rem;
+}
+
+.Search i
+{
+    font-size: 1.15rem;
+    cursor: pointer;
+}
+
+.Search input::-webkit-input-placeholder
+{
+    color: var(--gold);
+    font-style: italic;
+    opacity: 0.4;
+}
+
+.Search input::-ms-input-placeholder
+{
+    color: var(--gold);
+    font-style: italic;
+    opacity: 0.4;
+}
+
+.Search input::placeholder
+{
+    color: var(--gold);
+    font-style: italic;
+    opacity: 0.4;
+}
+
+@media screen and (min-width: 768px)
+{
+    .Search
+    {
+        width: auto;
+    }
+
+    .Search input
+    {
+        font-size: 1.2rem;
+    }
+}
+
+@media screen and (min-width: 1000px)
+{
+    .Search input
+    {
+        padding: 6px 12px;
+        min-width: 300px;
+        font-size: 1.2rem;
+    }
+
+
+}
