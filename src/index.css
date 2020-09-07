@@ -5,6 +5,7 @@
    --gold:#FADB8C;
    --form-bg:#89C8EB;
    --nav-bg:#303131;
+   --z:10;
 
 
 }
@@ -38,6 +39,7 @@ a
 {
   text-decoration: none;
   display: inline-block;
+  text-transform: capitalize;
 }
 
 button

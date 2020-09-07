@@ -1,0 +1,26 @@
+.Menu
+{
+    position: absolute;
+    right: -5%;
+    top: calc(100% + 18px);
+    background-color: var(--nav-bg);
+    border: 1px solid var(--gold);
+    z-index: calc( 2 * var(--z));
+}
+
+.MenuWrap
+{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 20px;
+    text-align: center;
+}
+
+.Item
+{
+    color:var(--gold);
+    margin: 10px 0;
+    padding-bottom: 5px;
+    border-bottom:  1px solid var(--gold);
+}

@@ -25,7 +25,7 @@ export const auth =
 export const user =
     [
         {
-            path: "/order",
+            path: "/order=history",
             text: "order history"
         },
         {
