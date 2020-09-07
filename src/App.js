@@ -1,13 +1,16 @@
 import React from 'react';
+import LargeNav from "./components/Navigation/LargeNav/LargeNav";
+import MobileNav from "./components/Navigation/MobileNav/MobileNav";
 import './App.css';
 
 function App () 
 {
 
   return (
-    <div className="App">
-      <h1>kryztalz</h1>
-    </div>
+    <>
+      <LargeNav />
+      <MobileNav />
+    </>
   );
 }
 
