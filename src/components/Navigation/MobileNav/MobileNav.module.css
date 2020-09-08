@@ -28,6 +28,9 @@
     background: none;
     color: var(--gold);
     text-align: end;
+    display: inline-block;
+    margin-right: 10px;
+    font-size: 1.15rem;
 }
 
 
