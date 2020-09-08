@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { normal, auth, user } from "../../../routes";
 import SearchInput from "../../SearchInput/SearchInput";
 import Menu from "../UserActions/UserActions";
+import CurrencySelect from "../../CurrencySelect/CurrencySelect";
 import logo from "../../../assets/images/logo-small.svg";
 import cart from "../../../assets/images/cart-icon.svg";
 import avatar from "../../../assets/images/user.svg";
@@ -36,9 +37,7 @@ function LargeNav ()
             </div>
             <div className={ classes.Others }>
 
-                <select name="" id="">
-                    <option value="jnjn">Hello</option>
-                </select>
+                <CurrencySelect />
 
                 {
                     normal.map( link => 

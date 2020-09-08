@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { NavLink } from "react-router-dom";
 import { normal, auth, user } from "../../../routes";
 import Menu from "../UserActions/UserActions";
+import CurrencySelect from "../../CurrencySelect/CurrencySelect";
 import SearchInput from "../../SearchInput/SearchInput";
 import logo from "../../../assets/images/logo-small.svg";
 import cart from "../../../assets/images/cart-icon.svg";
@@ -34,9 +35,7 @@ function MobileNav ()
                         <img src={ logo } alt="kryztalz logo, a diamond shape" />
                     </NavLink>
 
-                    <select name="" id="">
-                        <option value="jnjn">Hello</option>
-                    </select>
+                    <CurrencySelect />
                 </div>
 
                 <SearchInput />
