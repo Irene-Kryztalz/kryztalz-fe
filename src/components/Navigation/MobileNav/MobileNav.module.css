@@ -3,13 +3,14 @@
     position: fixed;
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr;
     gap: 5px;
     width: 100vw;
     padding: 5px  ;
     background-color: var(--nav-bg);
     justify-content: center;
 }
+
+
 
 .BottomNav
 {
@@ -20,6 +21,13 @@
     padding: 5px 10px ;
     background-color: var(--nav-bg);
     justify-content: center;
+}
+
+.ToggleSearch
+{
+    background: none;
+    color: var(--gold);
+    text-align: end;
 }
 
 

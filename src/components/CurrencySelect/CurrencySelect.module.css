@@ -75,6 +75,7 @@
 /* Handle */
 .List::-webkit-scrollbar-thumb {
   background: var(--gold);
+  border-radius: 3px;
 }
 
 

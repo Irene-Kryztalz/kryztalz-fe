@@ -14,6 +14,7 @@ import classes from "./MobileNav.module.css";
 function MobileNav ()
 {
     const [ menuOpen, setMenuOpen ] = useState( false );
+    const [ search, setSearch ] = useState( false );
     const [ currMenuOpen, setCurrMenuOpen ] = useState( false );
     const { cart: cartItems } = useContext( AppContext );
 
@@ -21,6 +22,7 @@ function MobileNav ()
     {
         setMenuOpen( false );
         setCurrMenuOpen( false );
+        setSearch( false );
     };
 
     const toggleMenu = ( event ) => 
@@ -30,12 +32,17 @@ function MobileNav ()
         setMenuOpen( !menuOpen );
     };
 
-
     const toggleCurrMenu = ( event ) => 
     {
         event.stopPropagation();
         closeAll();
         setCurrMenuOpen( !currMenuOpen );
+    };
+
+    const toggleSearch = () =>
+    {
+        closeAll();
+        setSearch( !search );
     };
 
 
@@ -53,12 +60,20 @@ function MobileNav ()
                     <CurrencySelect isOpen={ currMenuOpen } toggle={ toggleCurrMenu } />
                 </div>
 
-                <SearchInput />
+                {
+                    search ?
+                        <>
+                            <SearchInput />
+                            <button className={ classes.ToggleSearch } onClick={ toggleSearch }>
+                                <i className="fas fa-times"></i>
+                            </button>
+                        </> :
+                        <button onClick={ toggleSearch } className={ classes.ToggleSearch }>
+                            <i className="fas fa-search"></i>
+                        </button>
+                }
 
-
-
-            </header>
-
+            </header >
 
             <div onClick={ closeAll } className={ classes.BottomNav } >
 
@@ -83,7 +98,7 @@ function MobileNav ()
                 </div>
 
             </div>
-        </nav>
+        </nav >
     );
 }
 

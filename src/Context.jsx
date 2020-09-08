@@ -2,6 +2,8 @@ import React, { Component, createContext } from 'react';
 
 const AppContext = createContext( null );
 
+AppContext.displayName = 'AppContext';
+
 class AppProvider extends Component
 {
     state =
