@@ -50,7 +50,7 @@ function MobileNav ()
 
                 <div className={ classes.BNWrap }>
 
-                    <NavLink to="/cart" className={ classes.FooterIcon }>
+                    <NavLink to="/cart" className={ [ classes.FooterIcon, classes.Cart ].join( " " ) }>
                         <img src={ cart } alt="cart icon showing number of items in cart" />
                         <p title="20 items in cart" >20</p>
                     </NavLink>
