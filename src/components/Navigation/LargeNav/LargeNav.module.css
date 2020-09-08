@@ -38,7 +38,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        min-width: 50%;
+        min-width: 60%;
         font-family: 'Revalia', cursive;
     }
 
@@ -98,8 +98,8 @@
 {
     .Others
     {
-        min-width: 45%;
-        margin-right: 5%;
+        min-width: 55%;
+        margin-right: 2%;
     }
 
     .Link

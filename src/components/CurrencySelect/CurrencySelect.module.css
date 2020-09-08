@@ -1,0 +1,25 @@
+.Wrap
+{
+    display: grid;
+    grid-template-columns: 1fr 20px;
+    border-bottom: 1px solid var(--gold);
+    padding: 5px;
+    position: relative;
+    color: var(--gold);    
+    align-self: center;
+    font-family: 'Revalia', cursive;
+    max-width: 300px;
+}
+
+.ActiveCurr
+{
+    cursor: pointer;
+    
+}
+
+.CurrencyMenu
+{
+    background-color: var(--nav-bg);
+    max-height: 200px;
+    overflow-y: scroll;
+}
