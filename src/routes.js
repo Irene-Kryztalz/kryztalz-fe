@@ -25,11 +25,15 @@ export const auth =
 export const user =
     [
         {
-            path: "/order=history",
+            path: "/order-history",
             text: "order history"
         },
         {
             path: "/account",
             text: "account details"
+        },
+        {
+            path: "/wishlist",
+            text: "wishlist"
         }
     ];

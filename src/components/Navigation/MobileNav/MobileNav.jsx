@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { NavLink } from "react-router-dom";
 import { normal, auth, user } from "../../../routes";
 import Menu from "../UserActions/UserActions";
 import CurrencySelect from "../../CurrencySelect/CurrencySelect";
 import SearchInput from "../../SearchInput/SearchInput";
+import AppContext from "../../../Context";
 import logo from "../../../assets/images/logo-small.svg";
 import cart from "../../../assets/images/cart-icon.svg";
 import avatar from "../../../assets/images/user.svg";
@@ -13,20 +14,34 @@ import classes from "./MobileNav.module.css";
 function MobileNav ()
 {
     const [ menuOpen, setMenuOpen ] = useState( false );
-
-    const toggleMenu = ( event ) => 
-    {
-        event.stopPropagation();
-        setMenuOpen( !menuOpen );
-    };
+    const [ currMenuOpen, setCurrMenuOpen ] = useState( false );
+    const { cart: cartItems } = useContext( AppContext );
 
     const closeAll = () => 
     {
         setMenuOpen( false );
+        setCurrMenuOpen( false );
     };
 
+    const toggleMenu = ( event ) => 
+    {
+        event.stopPropagation();
+        closeAll();
+        setMenuOpen( !menuOpen );
+    };
+
+
+    const toggleCurrMenu = ( event ) => 
+    {
+        event.stopPropagation();
+        closeAll();
+        setCurrMenuOpen( !currMenuOpen );
+    };
+
+
+
     return (
-        <nav onClick={ closeAll } className={ classes.NavMobile } >
+        <nav className={ classes.NavMobile } >
 
             <header className={ classes.TopNav }>
 
@@ -35,7 +50,7 @@ function MobileNav ()
                         <img src={ logo } alt="kryztalz logo, a diamond shape" />
                     </NavLink>
 
-                    <CurrencySelect />
+                    <CurrencySelect isOpen={ currMenuOpen } toggle={ toggleCurrMenu } />
                 </div>
 
                 <SearchInput />
@@ -45,13 +60,14 @@ function MobileNav ()
             </header>
 
 
-            <footer className={ classes.BottomNav } >
+            <div onClick={ closeAll } className={ classes.BottomNav } >
 
                 <div className={ classes.BNWrap }>
 
                     <NavLink to="/cart" className={ [ classes.FooterIcon, classes.Cart ].join( " " ) }>
                         <img src={ cart } alt="cart icon showing number of items in cart" />
-                        <p title="20 items in cart" >20</p>
+
+                        <p title={ `${ cartItems.length } items in cart` }>{ cartItems.length }</p>
                     </NavLink>
 
                     <NavLink activeClassName={ classes.Active } className={ classes.Link } to={ normal[ 0 ].path }>
@@ -66,7 +82,7 @@ function MobileNav ()
 
                 </div>
 
-            </footer>
+            </div>
         </nav>
     );
 }
