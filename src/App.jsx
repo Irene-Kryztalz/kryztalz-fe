@@ -1,13 +1,13 @@
 import React from 'react';
 import LargeNav from "./components/Navigation/LargeNav/LargeNav";
 import MobileNav from "./components/Navigation/MobileNav/MobileNav";
+import { AppProvider } from "./Context";
 import './App.css';
 
 function App () 
 {
-
   return (
-    <>
+    <AppProvider>
       <LargeNav />
       <MobileNav />
 
@@ -16,7 +16,7 @@ function App ()
 
       Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ullam voluptates tempora quam in quas reiciendis dicta perferendis minima culpa debitis impedit commodi laudantium animi, voluptate distinctio, facere itaque eos eveniet, aperiam asperiores optio. Temporibus inventore veniam nostrum, at mollitia perferendis quidem neque rerum. Vero asperiores rem illo, ut atque provident voluptatibus quae sed quo maiores ex labore voluptates tenetur quod magni sit voluptatum. Inventore magni quam esse fugit laborum vitae quidem ex adipisci neque excepturi. Eius saepe quisquam eaque dolore maiores odit odio neque. Repellendus adipisci dicta recusandae numquam assumenda suscipit, quaerat dignissimos velit molestias amet explicabo. Iusto, quae delectus. Suscipit enim dolore, in, illo obcaecati minima ratione quam repellat eius, repellendus impedit harum optio nisi minus quis iusto eaque distinctio architecto dignissimos? Impedit temporibus eveniet a placeat rem, aspernatur consequatur rerum adipisci aliquid provident libero reiciendis beatae, quidem dolor perferendis nobis maxime, officiis omnis autem. Doloremque reprehenderit modi vitae fuga quia est! Excepturi enim nisi dolorem voluptatibus possimus, nihil tenetur fugit veniam dolor quasi pariatur corporis voluptates maiores iusto necessitatibus omnis optio. Odio temporibus velit doloribus, sed facilis tempora nulla quia aspernatur earum est, eveniet ducimus provident. Minima consectetur ex natus enim, architecto suscipit! Voluptate consectetur voluptatem nostrum assumenda.
       </p>
-    </>
+    </AppProvider>
   );
 }
 

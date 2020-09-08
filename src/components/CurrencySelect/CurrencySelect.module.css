@@ -9,6 +9,7 @@
     align-self: center;
     font-family: 'Revalia', cursive;
     max-width: 300px;
+    z-index: var(--z);
 }
 
 .ActiveCurr
@@ -17,9 +18,72 @@
     
 }
 
+.ActiveCurr span
+{
+  text-transform: uppercase;
+    
+}
+
+
 .CurrencyMenu
 {
+    position: absolute;
+    width: 80%;
+    top: calc( 100% + 12px);
     background-color: var(--nav-bg);
+    text-align: center;
+    border: 1px solid var(--gold);
+    border-radius: 5px;
+}
+
+.CurrencyMenu input
+{
+    border-radius: 5px;
+    margin: 5px ;
+    padding: 5px;
+    font-size: 1rem;
+    width: 90%;
+}
+
+.List
+{
+    margin: 10px;
     max-height: 200px;
     overflow-y: scroll;
+}
+
+.List li
+{
+    border-bottom: 1px solid var(--gold);
+    padding-bottom: 5px;
+    margin: 0 5px 5px;
+    word-wrap: break-word;
+    text-transform: capitalize;
+    cursor: pointer;
+}
+
+/* width */
+.List::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+.List::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+.List::-webkit-scrollbar-thumb {
+  background: var(--gold);
+  border-radius: 3px;
+}
+
+
+@media screen and (min-width:768px)
+{
+    .CurrencyMenu
+    {
+     
+        width: 100%;
+    }
 }
