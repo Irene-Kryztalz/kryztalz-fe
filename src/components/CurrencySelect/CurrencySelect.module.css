@@ -56,7 +56,7 @@
 {
     border-bottom: 1px solid var(--gold);
     padding-bottom: 5px;
-    margin: 0 5px 5px;
+    margin: 2px 5px 20px;
     word-wrap: break-word;
     text-transform: capitalize;
     cursor: pointer;
