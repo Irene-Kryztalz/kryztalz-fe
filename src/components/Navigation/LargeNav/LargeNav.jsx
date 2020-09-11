@@ -38,7 +38,7 @@ function LargeNav ()
     };
 
     return (
-        <nav className={ classes.NavBar }>
+        <nav onClick={ closeAll } className={ classes.NavBar }>
 
             <div className={ classes.LogoSearch }>
                 <NavLink to="/" className={ classes.Logo }>
