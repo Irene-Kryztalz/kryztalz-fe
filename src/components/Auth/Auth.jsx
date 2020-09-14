@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from 'react';
 import PropTypes from 'prop-types';
 import Field from "../Inputs/Field";
@@ -7,10 +8,8 @@ import classes from "./Auth.module.css";
 import logo from "../../assets/images/logo-large.svg";
 
 
-
 function Auth ( { fields, ...props } ) 
 {
-    window.g = fields;
 
     return (
         <div className={ classes.FormWrap }>
@@ -23,6 +22,7 @@ function Auth ( { fields, ...props } )
                     fields.map( ( field, i ) => (
                         <Field
                             key={ field.fieldName }
+                            changeHandler={ props.changeHandler }
                             shouldAutoFocus={ i === 0 }
                             classNamesGroup={ classes.Group }
                             classNamesInput={ joinClasses( classes.Input ) }
@@ -35,9 +35,12 @@ function Auth ( { fields, ...props } )
 
 
                 <Button
+                    className={ joinClasses( classes.Submit, ( !props.valid ? classes.Disabled : null ) ) }
+                    onClick={ props.handleSubmit }
                     pad="10px 40px"
+                    type="submit"
                     radius="6px"
-                    className={ joinClasses( classes.Submit, classes.Disabled ) }>
+                >
                     sign up
                 </Button>
 
@@ -49,7 +52,9 @@ function Auth ( { fields, ...props } )
 
 Auth.propTypes =
 {
-    fields: PropTypes.array
+    fields: PropTypes.array,
+    changeHandler: PropTypes.func,
+    handleSubmit: PropTypes.func
 };
 
 export default Auth;

@@ -4,7 +4,14 @@ import { flattenFormFields } from "../utils/flattenFormFields";
 
 const configureInitState = ( fieldConfig ) =>
 {
-    const state = {};
+    const formState =
+    {
+        valid: false,
+        isSubmitting: false,
+        state: {}
+    };
+    const { state } = formState;
+
     for ( const f in fieldConfig ) 
     {
         state[ f ] =
@@ -13,7 +20,6 @@ const configureInitState = ( fieldConfig ) =>
             label: fieldConfig[ f ].label,
             placeholder: fieldConfig[ f ].placeholder,
             value: "",
-            required: fieldConfig[ f ].required || true,
             valid: false,
             validators: fieldConfig[ f ].validators
         };
@@ -43,7 +49,17 @@ const configureInitState = ( fieldConfig ) =>
         return { next };
     };
 
-    return state;
+    return formState;
+};
+
+const checkFormCanSubmit = ( formFieldStates ) =>
+{
+    let canSubmit = true;
+    for ( const field of formFieldStates ) 
+    {
+        canSubmit = canSubmit && field.valid;
+    }
+    return canSubmit;
 };
 
 const reducer = ( state, action ) =>
@@ -53,16 +69,50 @@ const reducer = ( state, action ) =>
     {
         case "change":
 
+            const field = formState.state[ action.payload.name ];
+            formState.valid = false;
+            field.value = action.payload.value;
+            let isValid = true;
+
+            const pwd = formState.state.password.value.trim();
+            const confirmPwd = formState.state.confirmPassword.value.trim();
+
+            if ( pwd && confirmPwd )
+            {
+                isValid = isValid && ( pwd === confirmPwd );
+            }
+
+            field.validators.forEach( check => 
+            {
+                isValid = isValid && check( field.value );
+            } );
+
+            field.valid = isValid;
+
+            if ( checkFormCanSubmit( formState.state ) )
+            {
+                formState.valid = true;
+            }
+
             return formState;
 
         case "submit":
-            formState = configureInitState( action.payload );
+            formState.valid = false;
+            if ( checkFormCanSubmit( formState.state ) )
+            {
+                formState.valid = true;
+
+                console.log( formState );
+
+                //reset form
+                formState = configureInitState( action.payload );
+                return formState;
+            }
             return formState;
 
         default:
             return state;
     }
-
 };
 
 function useForm ( config, endpoint ) 
@@ -71,15 +121,22 @@ function useForm ( config, endpoint )
 
     const handleSubmit = evt => 
     {
-
         evt.preventDefault();
         dispatch( { type: "submit", payload: config } );
     };
 
     const changeHandler = evt => 
     {
-        const value = evt.target.value;
-        dispatch( { type: "change", payload: value } );
+        const { value, name } = evt.target;
+        dispatch(
+            {
+                type: "change",
+                payload:
+                {
+                    name,
+                    value,
+                }
+            } );
     };
 
     return [ formState, handleSubmit, changeHandler ];

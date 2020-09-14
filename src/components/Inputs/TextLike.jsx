@@ -2,10 +2,12 @@ import React from 'react';
 
 function TextLike ( props ) 
 {
+
     return (
         <div className={ props.classNamesGroup }>
             <label className={ props.classNamesLabel } htmlFor={ props.name }>{ props.label }</label>
             <input
+                onChange={ props.changeHandler }
                 autoFocus={ props.shouldAutoFocus }
                 className={ props.classNamesInput }
                 inputMode={ props.control }

@@ -12,15 +12,6 @@ function App ()
     <AppProvider>
       <LargeNav />
       <MobileNav />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
       <main>
         <SignUp />
       </main>

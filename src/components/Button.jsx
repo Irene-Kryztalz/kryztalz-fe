@@ -1,7 +1,11 @@
 // @ts-nocheck
 import styled from 'styled-components';
 
-const Button = styled.button`
+const Button = styled.button.attrs( props => (
+    {
+        type: props.type || "button"
+    }
+) )`
     color:${ props => props.color || "#000" };
     background:${ props => props.bg || "var(--gold)" }; 
     padding:${ props => props.pad || "10px" };

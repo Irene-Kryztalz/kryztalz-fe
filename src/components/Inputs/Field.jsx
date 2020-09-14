@@ -4,7 +4,6 @@ import TextLike from "./TextLike";
 
 function Field ( props )
 {
-    console.log( props );
 
     switch ( props.control.toLowerCase() )
     {
@@ -26,6 +25,7 @@ Field.defaultProps =
 Field.propTypes =
 {
     control: PropTypes.string,
+    changeHandler: PropTypes.func.isRequired,
     label: PropTypes.string.isRequired,
     name: PropTypes.string,
     placeholder: PropTypes.string,
