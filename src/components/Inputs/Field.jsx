@@ -2,28 +2,36 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TextLike from "./TextLike";
 
-function Field ( { as, ...props } )
+function Field ( props )
 {
+    console.log( props );
 
-    switch ( as.toLowerCase() )
+    switch ( props.control.toLowerCase() )
     {
-        case "text":
-            return <TextLike { ...props } />;
+        case "email":
+        case "password":
+            return <TextLike control={ props.control.toLowerCase() } { ...props } />;
 
         default:
-            break;
+            return <TextLike { ...props } />;
     }
 }
+
+Field.defaultProps =
+{
+    control: "text"
+};
 
 
 Field.propTypes =
 {
-    as: PropTypes.string,
+    control: PropTypes.string,
     label: PropTypes.string.isRequired,
     name: PropTypes.string,
     placeholder: PropTypes.string,
-    value: PropTypes.oneOf( [ PropTypes.string, PropTypes.number ] ),
+    value: PropTypes.oneOfType( [ PropTypes.string, PropTypes.number ] ),
     valid: PropTypes.bool,
+    required: PropTypes.bool,
     validators: PropTypes.arrayOf( PropTypes.func ),
     options: PropTypes.arrayOf( PropTypes.string ),
     classNamesInput: PropTypes.string,

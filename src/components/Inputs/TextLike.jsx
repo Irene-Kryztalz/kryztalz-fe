@@ -1,39 +1,22 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-function TextLike () 
+function TextLike ( props ) 
 {
     return (
-        <div>
-
+        <div className={ props.classNamesGroup }>
+            <label className={ props.classNamesLabel } htmlFor={ props.name }>{ props.label }</label>
+            <input
+                autoFocus={ props.shouldAutoFocus }
+                className={ props.classNamesInput }
+                inputMode={ props.control }
+                placeholder={ props.placeholder }
+                type={ props.control }
+                value={ props.value }
+                id={ props.name }
+                name={ props.name } />
         </div>
     );
 }
 
-TextLike.defaultProps =
-{
-    control: "text",
-    mode: "text",
-    value: "",
-    label: "Field label",
-    touched: false
-
-
-};
-
-TextLike.propTypes =
-{
-    label: PropTypes.string.isRequired,
-    name: PropTypes.string,
-    placeholder: PropTypes.string,
-    value: PropTypes.oneOf( [ PropTypes.string, PropTypes.number ] ),
-    valid: PropTypes.bool,
-    validators: PropTypes.arrayOf( PropTypes.func ),
-    classNamesInput: PropTypes.string,
-    classNamesLabel: PropTypes.string,
-    classNamesGroup: PropTypes.string
-
-
-};
 
 export default TextLike;
