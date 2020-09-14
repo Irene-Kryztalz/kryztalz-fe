@@ -23,16 +23,14 @@ function LargeNav ()
     };
 
 
-    const toggleMenu = ( event ) => 
+    const toggleMenu = () => 
     {
-        event.stopPropagation();
         closeAll();
         setMenuOpen( !menuOpen );
     };
 
-    const toggleCurrMenu = ( event ) => 
+    const toggleCurrMenu = () => 
     {
-        event.stopPropagation();
         closeAll();
         setCurrMenuOpen( !currMenuOpen );
     };

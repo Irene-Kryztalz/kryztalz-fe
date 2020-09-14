@@ -32,9 +32,8 @@ function MobileNav ()
         setMenuOpen( !menuOpen );
     };
 
-    const toggleCurrMenu = ( event ) => 
+    const toggleCurrMenu = () => 
     {
-        event.stopPropagation();
         closeAll();
         setCurrMenuOpen( !currMenuOpen );
     };

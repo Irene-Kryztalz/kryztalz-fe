@@ -16,6 +16,7 @@ function CurrencySelect ( { toggle, isOpen } )
     const clickHandler = ev =>
     {
         changeCurr( ev.target.dataset.value );
+        toggle();
     };
 
     const filteredCurr = Object.keys( currencies ).filter( c =>
