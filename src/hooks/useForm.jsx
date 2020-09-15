@@ -82,6 +82,11 @@ const reducer = ( state, action ) =>
                 isValid = isValid && ( pwd === confirmPwd );
             }
 
+            if ( field.control === "email" )
+            {
+                field.value = field.value.toLowerCase();
+            }
+
             field.validators.forEach( check => 
             {
                 isValid = isValid && check( field.value );
