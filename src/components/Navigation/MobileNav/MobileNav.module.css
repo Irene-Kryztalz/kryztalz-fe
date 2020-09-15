@@ -8,6 +8,7 @@
     padding: 5px  ;
     background-color: var(--nav-bg);
     justify-content: center;
+    z-index: calc(2*var(--z));
 }
 
 
@@ -21,6 +22,7 @@
     padding: 5px 10px ;
     background-color: var(--nav-bg);
     justify-content: center;
+    z-index: calc(2*var(--z));
 }
 
 .ToggleSearch

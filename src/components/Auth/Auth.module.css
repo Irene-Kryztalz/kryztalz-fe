@@ -1,0 +1,104 @@
+.FormWrap,
+.FormWrap form
+{
+    display: flex;
+    flex-direction: column; 
+    position: relative;
+}
+
+.FormWrap
+{
+    padding:10px  20px   ; 
+    justify-items: center;       
+    align-items: center;
+}
+
+
+.SwitchForm
+{
+    position: absolute;
+    right: 10px;
+    top:-10px
+}
+
+.Logo
+{
+    width: 50%;
+    max-width: 100px;
+    margin: auto;
+}
+
+
+.FormWrap form
+{
+    width: 100%;
+    max-width: 400px;
+    background: rgba(137, 200, 235, 0.28);
+    padding: 20px 10px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 6px;
+}
+
+.Group
+{
+    margin-bottom: 10px;
+}
+
+.Label
+{
+    display: block;   
+    font-family: 'Crimson Pro', serif;
+    color:var(--gold);
+    text-transform: capitalize;
+    font-size: 1.4rem;
+    margin: 10px auto;
+}
+
+.Input
+{
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    border: 3px solid transparent;
+    font-size: 1.3rem;
+    transition: border-color 0.1s linear,
+                box-shadow 0.2s linear;
+}
+
+.Input:focus
+{
+    border-color: var(--gold);
+    box-shadow: 3px 4px 8px 0px black;
+}
+
+.Submit
+{
+    align-self: center;
+    margin-top: 40px;
+}
+
+.Submit.Disabled
+{
+    cursor: not-allowed;
+    transition: none !important;    
+    transform: none !important;
+    opacity: 0.7;
+    background-color: #ccc;
+    pointer-events: none;
+    
+}
+
+@media screen and (min-width:768px)
+{
+  
+    .FormWrap form
+    {
+        padding: 20px;
+    }
+
+    .Logo
+    {
+        max-width: 150px;
+    }
+}
