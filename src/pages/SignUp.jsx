@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import useForm from "../hooks/useForm";
 import Auth from "../components/Auth/Auth";
 import
@@ -52,6 +52,8 @@ function SignUp ()
 
     return (
         <Auth
+            to="sign-in"
+            submitText="sign up"
             valid={ formState.valid }
             handleSubmit={ handleSubmit }
             changeHandler={ changeHandler }

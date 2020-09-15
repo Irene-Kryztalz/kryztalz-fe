@@ -4,6 +4,7 @@ import { Switch, Route } from "react-router-dom";
 import LargeNav from "./components/Navigation/LargeNav/LargeNav";
 import MobileNav from "./components/Navigation/MobileNav/MobileNav";
 import SignUp from "./pages/SignUp";
+import SignIn from "./pages/SignIn";
 import './App.css';
 
 function App () 
@@ -13,7 +14,14 @@ function App ()
       <LargeNav />
       <MobileNav />
       <main>
-        <SignUp />
+        <Switch>
+          <Route path="/sign-up">
+            <SignUp />
+          </Route>
+          <Route path="/sign-in">
+            <SignIn />
+          </Route>
+        </Switch>
       </main>
     </AppProvider>
   );

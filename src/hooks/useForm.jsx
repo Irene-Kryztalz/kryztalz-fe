@@ -74,8 +74,8 @@ const reducer = ( state, action ) =>
             field.value = action.payload.value;
             let isValid = true;
 
-            const pwd = formState.state.password.value.trim();
-            const confirmPwd = formState.state.confirmPassword.value.trim();
+            const pwd = formState.state.password ? formState.state.password.value.trim() : null;
+            const confirmPwd = formState.state.confirmPassword ? formState.state.confirmPassword.value.trim() : null;
 
             if ( pwd && confirmPwd )
             {
@@ -97,6 +97,7 @@ const reducer = ( state, action ) =>
             return formState;
 
         case "submit":
+
             formState.valid = false;
             if ( checkFormCanSubmit( formState.state ) )
             {
