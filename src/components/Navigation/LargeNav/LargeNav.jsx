@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { NavLink } from "react-router-dom";
 import { normal, auth, user } from "../../../routes";
 import AppContext from "../../../Context";
@@ -10,30 +10,10 @@ import cart from "../../../assets/images/cart-icon.svg";
 import avatar from "../../../assets/images/user.svg";
 import classes from "./LargeNav.module.css";
 
-function LargeNav ()
+function LargeNav ( { menuOpen, currMenuOpen, toggleCurrMenu, toggleMenu } )
 {
-    const [ menuOpen, setMenuOpen ] = useState( false );
-    const [ currMenuOpen, setCurrMenuOpen ] = useState( false );
+    const { cart: cartItems, isAuth } = useContext( AppContext );
 
-    const { cart: cartItems } = useContext( AppContext );
-    const closeAll = () => 
-    {
-        setMenuOpen( false );
-        setCurrMenuOpen( false );
-    };
-
-
-    const toggleMenu = () => 
-    {
-        closeAll();
-        setMenuOpen( !menuOpen );
-    };
-
-    const toggleCurrMenu = () => 
-    {
-        closeAll();
-        setCurrMenuOpen( !currMenuOpen );
-    };
 
     return (
         <nav className={ classes.NavBar }>
@@ -57,6 +37,8 @@ function LargeNav ()
 
                         return a;
                     } )
+
+
                 }
 
                 <NavLink to="/cart" className={ classes.Cart }>
@@ -68,7 +50,7 @@ function LargeNav ()
                     <img src={ avatar } alt="icon of a user" />
                 </button>
 
-                <Menu toggle={ toggleMenu } isOpen={ menuOpen } menuItems={ [ ...auth, ...user ] } />
+                <Menu toggle={ toggleMenu } isOpen={ menuOpen } menuItems={ isAuth ? user : auth } />
 
             </div>
 

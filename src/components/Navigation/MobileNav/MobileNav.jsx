@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { NavLink } from "react-router-dom";
 import { normal, auth, user } from "../../../routes";
 import Menu from "../UserActions/UserActions";
@@ -11,40 +11,9 @@ import avatar from "../../../assets/images/user.svg";
 
 import classes from "./MobileNav.module.css";
 
-function MobileNav ()
+function MobileNav ( { menuOpen, search, currMenuOpen, toggleCurrMenu, toggleSearch, toggleMenu } )
 {
-    const [ menuOpen, setMenuOpen ] = useState( false );
-    const [ search, setSearch ] = useState( false );
-    const [ currMenuOpen, setCurrMenuOpen ] = useState( false );
-    const { cart: cartItems } = useContext( AppContext );
-
-    const closeAll = () => 
-    {
-        setMenuOpen( false );
-        setCurrMenuOpen( false );
-        setSearch( false );
-    };
-
-    const toggleMenu = ( event ) => 
-    {
-        event.stopPropagation();
-        closeAll();
-        setMenuOpen( !menuOpen );
-    };
-
-    const toggleCurrMenu = () => 
-    {
-        closeAll();
-        setCurrMenuOpen( !currMenuOpen );
-    };
-
-    const toggleSearch = () =>
-    {
-        closeAll();
-        setSearch( !search );
-    };
-
-
+    const { cart: cartItems, isAuth } = useContext( AppContext );
 
     return (
         <nav className={ classes.NavMobile } >
@@ -74,7 +43,7 @@ function MobileNav ()
 
             </header >
 
-            <div onClick={ closeAll } className={ classes.BottomNav } >
+            <div className={ classes.BottomNav } >
 
                 <div className={ classes.BNWrap }>
 
@@ -92,7 +61,7 @@ function MobileNav ()
                         <img src={ avatar } alt="icon of a user" />
                     </button>
 
-                    <Menu mobile toggle={ toggleMenu } isOpen={ menuOpen } menuItems={ [ ...auth, ...user ] } />
+                    <Menu mobile toggle={ toggleMenu } isOpen={ menuOpen } menuItems={ isAuth ? user : auth } />
 
                 </div>
 

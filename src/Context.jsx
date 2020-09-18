@@ -14,7 +14,7 @@ class AppProvider extends Component
             currencies: {},
             activeCurr: "",
             isAuth: false,
-            baseUrl: ""
+            baseUrl: "http://localhost:3001/user"
 
         };
 
@@ -37,14 +37,36 @@ class AppProvider extends Component
 
     }
 
-    getData = url =>
-    {
-
-    };
-
     changeCurr = ( curr ) =>
     {
         this.setState( { activeCurr: curr } );
+    };
+
+
+    sendData = async ( { endpoint, formData, method = "GET", headers } ) =>
+    {
+        this.setState( { loading: true } );
+        const response = await fetch( `${ this.state.baseUrl }/${ endpoint }`,
+            {
+                method,
+                headers,
+                body: formData
+            } );
+
+        if ( response.ok )
+        {
+            this.setState( { loading: false } );
+            return { data: await response.json() };
+        }
+        else
+        {
+            this.setState( { loading: false } );
+            return {
+                code: response.status,
+                data: await response.json()
+            };
+        }
+
     };
 
     formatData = ( currencies ) =>
@@ -62,6 +84,18 @@ class AppProvider extends Component
         return formatted;
     };
 
+    login = ( token ) =>
+    {
+        localStorage.setItem( 'kryztalz-token', token );
+        this.setState( { isAuth: true } );
+
+    };
+
+    logout = () =>
+    {
+        this.setState( { isAuth: false } );
+    };
+
 
     render ()
     {
@@ -69,8 +103,9 @@ class AppProvider extends Component
             <AppContext.Provider value={
                 {
                     ...this.state,
-                    getData: this.getData,
-                    changeCurr: this.changeCurr
+                    changeCurr: this.changeCurr,
+                    login: this.login,
+                    sendData: this.sendData
                 } }>
                 { this.props.children }
             </AppContext.Provider>

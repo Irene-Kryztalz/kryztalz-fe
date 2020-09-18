@@ -82,6 +82,11 @@ const reducer = ( state, action ) =>
                 isValid = isValid && ( pwd === confirmPwd );
             }
 
+            if ( field.control === "email" )
+            {
+                field.value = field.value.toLowerCase();
+            }
+
             field.validators.forEach( check => 
             {
                 isValid = isValid && check( field.value );
@@ -96,35 +101,14 @@ const reducer = ( state, action ) =>
 
             return formState;
 
-        case "submit":
-
-            formState.valid = false;
-            if ( checkFormCanSubmit( formState.state ) )
-            {
-                formState.valid = true;
-
-                console.log( formState );
-
-                //reset form
-                formState = configureInitState( action.payload );
-                return formState;
-            }
-            return formState;
-
         default:
             return state;
     }
 };
 
-function useForm ( config, endpoint ) 
+function useForm ( config ) 
 {
     const [ formState, dispatch ] = useReducer( reducer, configureInitState( config ) );
-
-    const handleSubmit = evt => 
-    {
-        evt.preventDefault();
-        dispatch( { type: "submit", payload: config } );
-    };
 
     const changeHandler = evt => 
     {
@@ -140,7 +124,7 @@ function useForm ( config, endpoint )
             } );
     };
 
-    return [ formState, handleSubmit, changeHandler ];
+    return [ formState, changeHandler ];
 }
 
 export default useForm;
