@@ -35,6 +35,8 @@ class AppProvider extends Component
                 } );
         }
 
+        console.log( process.env );
+
     }
 
     changeCurr = ( curr ) =>
