@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import useForm from "../hooks/useForm";
+import AppContext from "../Context";
 import Auth from "../components/Auth/Auth";
+import { extractFormData } from "../utils/extractFormData";
 import
 {
     length,
@@ -32,8 +34,37 @@ const config =
 
 function SignIn () 
 {
-    const [ formState, handleSubmit, changeHandler ] = useForm( config, "" );
+    const [ formState, changeHandler ] = useForm( config );
+    const { login, sendData } = useContext( AppContext );
 
+    const handleSubmit = async ( ev ) =>
+    {
+        ev.preventDefault();
+        const formData = extractFormData( formState.state );
+
+        const response = await sendData(
+            {
+                endpoint: "signin",
+                formData: JSON.stringify( formData ),
+                method: "post",
+                headers:
+                {
+                    "Content-Type": "application/json"
+                }
+            } );
+
+        if ( response.data.user )
+        {
+            login( response.data.user.token );
+            console.log( response.data.user );
+        }
+        else
+        {
+            console.log( response.data.message );
+        }
+
+
+    };
 
 
     return (

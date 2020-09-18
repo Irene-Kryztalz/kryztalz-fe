@@ -42,6 +42,7 @@
 .Group
 {
     margin-bottom: 10px;
+    position: relative;
 }
 
 .Label
@@ -87,6 +88,29 @@
     background-color: #ccc;
     pointer-events: none;
     
+}
+
+.Input[type="password"]
+{
+   padding-right: 45px;
+}
+
+/*Style the password icon*/
+.Input + span
+{
+   position: absolute;
+   right: 5px;
+   bottom: 0;
+   color: var(--form-bg);
+   width: 40px;
+   height: 40px;
+   z-index: var(--z);
+   cursor: pointer;
+   background-color: transparent;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   font-size: 1.4rem;
 }
 
 @media screen and (min-width:768px)

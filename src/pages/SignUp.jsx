@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import AppContext from "../Context";
 import useForm from "../hooks/useForm";
 import Auth from "../components/Auth/Auth";
+
+import { extractFormData } from "../utils/extractFormData";
 import
 {
     length,
@@ -46,9 +49,25 @@ const config =
 
 function SignUp ()
 {
-    const [ formState, handleSubmit, changeHandler ] = useForm( config, "" );
+    const [ formState, changeHandler ] = useForm( config );
+    const { sendData } = useContext( AppContext );
 
+    const handleSubmit = ev =>
+    {
+        ev.preventDefault();
+        const formData = extractFormData( formState.state );
 
+        sendData(
+            {
+                endpoint: "signup",
+                formData: JSON.stringify( formData ),
+                method: "post",
+                headers:
+                {
+                    "Content-Type": "application/json"
+                }
+            } );
+    };
 
     return (
         <Auth

@@ -14,14 +14,12 @@
 
 .ActiveCurr
 {
-    cursor: pointer;
-    
+    cursor: pointer;    
 }
 
 .ActiveCurr span
 {
-  text-transform: uppercase;
-    
+  text-transform: uppercase;    
 }
 
 
@@ -48,7 +46,7 @@
 .List
 {
     margin: 10px;
-    max-height: 200px;
+    max-height: 250px;
     overflow-y: scroll;
 }
 
@@ -62,18 +60,19 @@
     cursor: pointer;
 }
 
-/* width */
-.List::-webkit-scrollbar {
+
+.List::-webkit-scrollbar 
+{
   width: 8px;
 }
 
-/* Track */
-.List::-webkit-scrollbar-track {
+.List::-webkit-scrollbar-track 
+{
   background: transparent;
 }
 
-/* Handle */
-.List::-webkit-scrollbar-thumb {
+.List::-webkit-scrollbar-thumb 
+{
   background: var(--gold);
   border-radius: 3px;
 }
@@ -82,8 +81,13 @@
 @media screen and (min-width:768px)
 {
     .CurrencyMenu
-    {
-     
-        width: 100%;
+    { 
+      width: 100%;
     }
+
+    .List
+    {
+      max-height: 200px;
+    }
+
 }
