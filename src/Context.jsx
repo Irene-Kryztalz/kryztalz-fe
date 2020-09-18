@@ -35,7 +35,13 @@ class AppProvider extends Component
                 } );
         }
 
-        console.log( process.env );
+        if ( !process.env.NODE_ENV || process.env.NODE_ENV === 'development' )
+        {
+            console.log( 99 );
+        } else
+        {
+            console.log( 88 );
+        }
 
     }
 
