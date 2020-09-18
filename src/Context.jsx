@@ -35,15 +35,19 @@ class AppProvider extends Component
                 } );
         }
 
+
         if ( !process.env.NODE_ENV || process.env.NODE_ENV === 'development' )
         {
-            this.setState( { baseUrl: "http://localhost:3001" } );
+            this.setState( { baseUrl: "http://localhost:3001/user" } );
 
         } else
         {
 
             this.setState( { baseUrl: process.env.REACT_APP_SERVER } );
+
+
         }
+
 
     }
 
