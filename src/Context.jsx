@@ -14,7 +14,7 @@ class AppProvider extends Component
             currencies: {},
             activeCurr: "",
             isAuth: false,
-            baseUrl: "http://localhost:3001/user"
+            baseUrl: ""
 
         };
 
@@ -37,10 +37,12 @@ class AppProvider extends Component
 
         if ( !process.env.NODE_ENV || process.env.NODE_ENV === 'development' )
         {
-            console.log( 99 );
+            this.setState( { baseUrl: "http://localhost:3001" } );
+
         } else
         {
-            console.log( 88 );
+
+            this.setState( { baseUrl: process.env.REACT_APP_SERVER } );
         }
 
     }
