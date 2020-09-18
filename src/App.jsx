@@ -1,7 +1,7 @@
 import React from 'react';
 import { AppProvider } from "./Context";
 import { Switch, Route } from "react-router-dom";
-import Navigation from "./components/Navigation";
+import Navigation from "./components/Navigation/Navigation";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import './App.css';
