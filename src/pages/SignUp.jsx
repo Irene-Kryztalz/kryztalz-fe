@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { useHistory } from "react-router-dom";
 import AppContext from "../Context";
 import useForm from "../hooks/useForm";
 import Auth from "../components/Auth/Auth";
@@ -51,13 +52,14 @@ function SignUp ()
 {
     const [ formState, changeHandler ] = useForm( config );
     const { sendData } = useContext( AppContext );
+    const history = useHistory();
 
-    const handleSubmit = ev =>
+    const handleSubmit = async ev =>
     {
         ev.preventDefault();
         const formData = extractFormData( formState.state );
 
-        sendData(
+        const response = await sendData(
             {
                 endpoint: "signup",
                 formData: JSON.stringify( formData ),
@@ -67,6 +69,19 @@ function SignUp ()
                     "Content-Type": "application/json"
                 }
             } );
+
+        if ( response.data.user )
+        {
+            console.log( formState );
+            history.push( {
+                pathname: '/after-reg',
+                search: `?name=${ formData.name }&email=${ formData.email }`
+            } );
+        }
+        else
+        {
+            console.log( response.error.message );
+        }
     };
 
     return (

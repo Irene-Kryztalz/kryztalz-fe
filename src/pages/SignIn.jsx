@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+//import { useHistory } from "react-router-dom";
 import useForm from "../hooks/useForm";
 import AppContext from "../Context";
 import Auth from "../components/Auth/Auth";
@@ -37,6 +38,8 @@ function SignIn ()
     const [ formState, changeHandler ] = useForm( config );
     const { login, sendData } = useContext( AppContext );
 
+
+
     const handleSubmit = async ( ev ) =>
     {
         ev.preventDefault();
@@ -53,15 +56,16 @@ function SignIn ()
                 }
             } );
 
-        if ( response.data.user )
+        if ( response.error )
+        {
+            console.log( response );
+        }
+        else
         {
             login( response.data.user.token );
             console.log( response.data.user );
         }
-        else
-        {
-            console.log( response.data.message );
-        }
+
 
 
     };
