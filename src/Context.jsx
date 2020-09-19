@@ -79,6 +79,7 @@ class AppProvider extends Component
         }
         else
         {
+
             this.setState( { loading: false } );
             return {
                 code: response.status,
