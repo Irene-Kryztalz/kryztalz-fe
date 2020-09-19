@@ -70,17 +70,18 @@ function SignUp ()
                 }
             } );
 
-        if ( response.data.user )
+
+        if ( response.error )
         {
-            console.log( formState );
+            console.log( response );
+
+        }
+        else
+        {
             history.push( {
                 pathname: '/after-reg',
                 search: `?name=${ formData.name }&email=${ formData.email }`
             } );
-        }
-        else
-        {
-            console.log( response.error.message );
         }
     };
 

@@ -18,7 +18,7 @@
   height: 0;
   box-sizing: border-box;
   border: 100px solid var(--gold);
-  border-color: var(--gold) transparent var(--gold)transparent;
+  border-color: var(--gold) transparent var(--gold) transparent;
   animation: LDS 1.2s infinite;
 }
 
