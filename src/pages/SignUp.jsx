@@ -72,8 +72,11 @@ function SignUp ()
 
         if ( response.data.user )
         {
-
-            history.push( "/products" );
+            console.log( formState );
+            history.push( {
+                pathname: '/after-reg',
+                search: `?name=${ formData.name }&email=${ formData.email }`
+            } );
         }
         else
         {

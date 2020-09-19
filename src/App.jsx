@@ -2,10 +2,11 @@ import React from 'react';
 import { AppProvider } from "./Context";
 import { Switch, Route } from "react-router-dom";
 import Main from "./components/Main";
-import Test from "./components/Mail/Test";
+import AfterSignUp from "./components/Mail/AfterSignUp";
 import Navigation from "./components/Navigation/Navigation";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
+import VerifyAccount from "./pages/VerifyAccount";
 import './App.css';
 
 function App () 
@@ -22,7 +23,10 @@ function App ()
             <SignIn />
           </Route>
           <Route path="/verify-account">
-            <Test />
+            <VerifyAccount />
+          </Route>
+          <Route path="/after-reg">
+            <AfterSignUp />
           </Route>
         </Switch>
       </Main>

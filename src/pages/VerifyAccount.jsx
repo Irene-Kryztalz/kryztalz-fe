@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { parse } from "query-string";
 import { useLocation, useHistory } from "react-router-dom";
-import AppContext from "../../Context";
-import Failure from "./Failure";
-import Success from "./Success";
+import AppContext from "../Context";
+import Failure from "../components/Mail/Failure";
+import Success from "../components/Mail//Success";
 
-function Test ()
+function VerifyAccount ()
 {
     const { search } = useLocation();
     const { sendData, baseUrl } = useContext( AppContext );
@@ -45,4 +45,4 @@ function Test ()
     return comp;
 }
 
-export default Test;
+export default VerifyAccount;

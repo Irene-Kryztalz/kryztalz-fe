@@ -31,12 +31,13 @@ function Failure ( { id } )
             setHasSent( true );
 
         }
-        else if ( response.data.message === "User has already been verified " )
+        else if ( response.data.message === "User has already been verified" )
         {
             history.push( "/sign-in" );
         }
         else 
         {
+            console.log( response );
             setContent(
                 (
 
@@ -69,7 +70,15 @@ function Failure ( { id } )
                                 <li>The token has expired.</li>
                             </ul>
 
+                            <small>** If verified, you will be redirected to the login page **</small>
+
+                            <br />  <br />
+
                             <p>Click the link below, and more instructions will be sent to your mail</p>
+
+
+
+
 
                             <button onClick={ checkEmail } className={ classes.Link } >
                                 Trouble verifying account
