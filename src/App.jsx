@@ -1,6 +1,8 @@
 import React from 'react';
 import { AppProvider } from "./Context";
 import { Switch, Route } from "react-router-dom";
+import Main from "./components/Main";
+import Test from "./components/Mail/Test";
 import Navigation from "./components/Navigation/Navigation";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
@@ -11,16 +13,19 @@ function App ()
   return (
     <AppProvider>
       <Navigation />
-      <main>
+      <Main>
         <Switch>
-          <Route path="/sign-up">
+          <Route exact path="/sign-up">
             <SignUp />
           </Route>
-          <Route path="/sign-in">
+          <Route exact path="/sign-in">
             <SignIn />
           </Route>
+          <Route path="/verify-account">
+            <Test />
+          </Route>
         </Switch>
-      </main>
+      </Main>
     </AppProvider>
   );
 }
