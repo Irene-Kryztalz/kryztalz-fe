@@ -24,13 +24,13 @@ class AppProvider extends Component
 
         if ( !process.env.NODE_ENV || process.env.NODE_ENV === 'development' )
         {
-            base = "http://localhost:3001/user";
+            base = "http://localhost:8080/user";
 
         } else
         {
             base = process.env.REACT_APP_SERVER;
         }
-        if ( !this.state.currencies[ "NGN" ] )
+        if ( !this.state.currencies[ "ngn" ] )
         {
             fetch( "./currency-country.json" )
                 .then( resp => resp.json() )
