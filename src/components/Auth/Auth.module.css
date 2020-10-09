@@ -90,7 +90,7 @@
     
 }
 
-.Input[type="password"]
+.Input[data-isPassword="password"]
 {
    padding-right: 45px;
 }
