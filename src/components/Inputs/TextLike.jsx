@@ -32,7 +32,7 @@ function TextLike ( props )
                 className={ props.classNamesInput }
                 inputMode={ props.control }
                 placeholder={ props.placeholder }
-                data-isPassword={ initialState === "password" ? "password" : null }
+                data-ispassword={ initialState === "password" ? "password" : null }
                 type={ props.control === "password" ? changePtype( showPassword ) : props.control }
                 value={ props.value }
                 id={ props.name }
