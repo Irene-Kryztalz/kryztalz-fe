@@ -61,7 +61,7 @@ function SignUp ()
 
         const response = await sendData(
             {
-                endpoint: "signup",
+                endpoint: "user/signup",
                 formData: JSON.stringify( formData ),
                 method: "post",
                 headers:
