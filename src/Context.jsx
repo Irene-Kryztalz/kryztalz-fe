@@ -106,7 +106,7 @@ class AppProvider extends Component
 
     login = ( token ) =>
     {
-        localStorage.setItem( 'kryztalz-token', token );
+        localStorage.setItem( 'token', token );
         this.setState( { isAuth: true } );
 
     };
