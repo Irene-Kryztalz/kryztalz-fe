@@ -1,0 +1,17 @@
+.InputError
+{
+    color: var(--err-red);
+    margin: 8px;
+    font-style: italic;
+    letter-spacing: 1px;
+}
+
+
+.PageError
+{
+    border: 1px solid var( --purple );
+    padding: 10px;
+    margin: 10px;
+    color: #fff;
+    background-color: var(--err-red);
+}

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { InputError } from "../Errors/Errors";
 
 function TextLike ( props ) 
 {
@@ -29,6 +30,7 @@ function TextLike ( props )
             <input
                 onChange={ props.changeHandler }
                 autoFocus={ props.shouldAutoFocus }
+                onKeyPress={ props.keypress }
                 className={ props.classNamesInput }
                 inputMode={ props.control }
                 placeholder={ props.placeholder }
@@ -48,6 +50,8 @@ function TextLike ( props )
 
                     </span> : null
             }
+
+            {props.touched && !props.valid && <InputError message={ props.message } /> }
         </div>
     );
 }

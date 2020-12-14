@@ -20,6 +20,7 @@ const config =
         label: "Email address",
         placeholder: "Input email...",
         control: "email",
+        message: "Please type in a valid email",
         validators: [ required, email ]
 
     },
@@ -28,6 +29,7 @@ const config =
         label: "Password",
         placeholder: "Enter password...",
         control: "password",
+        message: "Invalid password. Password is case sensitive and must contain at least 8 alphanumeric characters",
         validators: [ required, length( { min: 8 } ), alphaNumeric ]
     }
 
@@ -55,9 +57,11 @@ function SignIn ()
                 }
             } );
 
+
         if ( response.error )
         {
             console.log( response );
+
         }
         else
         {

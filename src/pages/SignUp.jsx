@@ -19,6 +19,7 @@ const config =
     {
         label: "Name",
         placeholder: "Enter username...",
+        message: "Please type in a name",
         validators: [ required ]
 
     },
@@ -26,6 +27,7 @@ const config =
     {
         label: "Email address",
         placeholder: "Enter email...",
+        message: "Please type in a valid email",
         control: "email",
         validators: [ required, email ]
 
@@ -35,6 +37,7 @@ const config =
         label: "Password",
         placeholder: "Enter password...",
         control: "password",
+        message: "Password must be at least 8 characters long. Only letters and numbers allowed.",
         validators: [ required, length( { min: 8 } ), alphaNumeric ]
     },
     confirmPassword:
@@ -42,6 +45,7 @@ const config =
         label: "Retype password",
         placeholder: "Re-enter password...",
         control: "password",
+        message: "Passwords must be match.",
         validators: [ required, length( { min: 8 } ), alphaNumeric ]
 
     },
@@ -78,6 +82,11 @@ function SignUp ()
         }
         else
         {
+            const now = new Date().getTime();
+
+            const oneHr = 60 * 60 * 1000;
+
+            localStorage.setItem( "mail", now + oneHr );
             history.push( {
                 pathname: '/after-reg',
                 search: `?name=${ formData.name }&email=${ formData.email }`

@@ -21,7 +21,9 @@ const configureInitState = ( fieldConfig ) =>
             placeholder: fieldConfig[ f ].placeholder,
             value: "",
             valid: false,
-            validators: fieldConfig[ f ].validators
+            validators: fieldConfig[ f ].validators,
+            touched: false,
+            message: fieldConfig[ f ].message
         };
     };
 
@@ -71,6 +73,7 @@ const reducer = ( state, action ) =>
 
             const field = formState.state[ action.payload.name ];
             formState.valid = false;
+            field.touched = true;
             field.value = action.payload.value;
             let isValid = true;
 

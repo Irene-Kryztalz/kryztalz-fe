@@ -20,6 +20,13 @@ const Button = styled.button.attrs( props => (
         transform: scale(1.05);    
     }
 
+    &[disabled]
+    {
+        transform:none;
+        cursor: not-allowed;
+        opacity:0.5
+    }
+
 `;
 
 export default Button;
