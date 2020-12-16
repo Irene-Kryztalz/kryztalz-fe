@@ -7,6 +7,7 @@ import Navigation from "./components/Navigation/Navigation";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import VerifyAccount from "./pages/VerifyAccount";
+import HomePage from "./pages/HomePage";
 import './App.css';
 
 function App () 
@@ -27,6 +28,9 @@ function App ()
           </Route>
           <Route path="/after-reg">
             <AfterSignUp />
+          </Route>
+          <Route exact path="/">
+            <HomePage />
           </Route>
         </Switch>
       </Main>

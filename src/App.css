@@ -1,17 +1,6 @@
-/* ANIMATED.DIV */
-/*
-#root > div > div  
-{
-  position: absolute;
-  width: 100%;
-  min-height: 100vh;
-}
-
-*/
-
 main
 {
-  padding-top: 100px;
+  padding-top: 80px;
   padding-bottom: 100px;
 }
 
@@ -19,6 +8,6 @@ main
 {
    main
    {
-     padding-top: 80px;
+     padding-top: 60px;
    }
 }

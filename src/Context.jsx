@@ -14,7 +14,9 @@ class AppProvider extends Component
             currencies: {},
             activeCurr: "",
             isAuth: false,
-            baseUrl: ""
+            baseUrl: "",
+            gems: [],
+            count: 0
 
         };
 
@@ -54,10 +56,14 @@ class AppProvider extends Component
     };
 
 
-    sendData = async ( { endpoint, formData, method = "GET", headers } ) =>
+
+    sendData = async ( { endpoint, formData, method = "GET", headers, setLoad = true } ) =>
     {
         method = method.toUpperCase();
-        this.setState( { loading: true } );
+        if ( setLoad )
+        {
+            this.setState( { loading: true } );
+        }
         headers =
         {
             ...headers,
@@ -148,6 +154,24 @@ class AppProvider extends Component
         localStorage.removeItem( 'kryztalz-token' );
     };
 
+    setGems = ( items ) =>
+    {
+        if ( !this.state.gems.length )
+        {
+            const { gems, count } = items;
+            this.setState( { gems, count } );
+            return;
+        }
+
+        if ( this.state.gems.length && items.gems.length )
+        {
+            const allGems = [ ...this.state.gems, ...items.gems ];
+
+            this.setState( { gems: allGems, count: items.count } );
+            return;
+        }
+    };
+
 
     render ()
     {
@@ -157,7 +181,8 @@ class AppProvider extends Component
                     ...this.state,
                     changeCurr: this.changeCurr,
                     login: this.login,
-                    sendData: this.sendData
+                    sendData: this.sendData,
+                    setGems: this.setGems
                 } }>
                 { this.props.children }
             </AppContext.Provider>
