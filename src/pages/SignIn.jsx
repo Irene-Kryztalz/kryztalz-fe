@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-//import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import useForm from "../hooks/useForm";
 import AppContext from "../Context";
 import Auth from "../components/Auth/Auth";
@@ -20,6 +20,7 @@ const config =
         label: "Email address",
         placeholder: "Input email...",
         control: "email",
+        message: "Please type in a valid email",
         validators: [ required, email ]
 
     },
@@ -28,6 +29,7 @@ const config =
         label: "Password",
         placeholder: "Enter password...",
         control: "password",
+        message: "Invalid password. Password is case sensitive and must contain at least 8 alphanumeric characters",
         validators: [ required, length( { min: 8 } ), alphaNumeric ]
     }
 
@@ -35,9 +37,9 @@ const config =
 
 function SignIn () 
 {
+    const history = useHistory();
     const [ formState, changeHandler ] = useForm( config );
     const { login, sendData } = useContext( AppContext );
-
 
 
     const handleSubmit = async ( ev ) =>
@@ -56,14 +58,17 @@ function SignIn ()
                 }
             } );
 
+
         if ( response.error )
         {
             console.log( response );
+
         }
         else
         {
-            login( response.data.user.token );
-            console.log( response.data.user );
+            const { token, cart, wishlist, expires } = response.data.user;
+            login( { token, cart, wishlist, expires } );
+            history.push( "/products" );
         }
 
 

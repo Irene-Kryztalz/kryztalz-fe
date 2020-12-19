@@ -5,12 +5,14 @@
    --purple-transparent:rgba(255, 111, 206,0.5); 
    --gold:rgb(250, 219, 140);
    --form-bg:rgba(137, 200, 235, 0.28);
-   --blue:rgb(137, 200, 235);
+   --blue:#4e6263;
    --nav-bg:rgb(48, 49, 49);
+   --err-red:#cf6767;
    --z:10;
 
 
 }
+
 
 /*
 font-family: 'Crimson Pro', serif;
@@ -24,6 +26,11 @@ font-family: 'Revalia', cursive;
   margin:0;
   padding:0;
   box-sizing: border-box;
+}
+
+html
+{
+  max-width: 100vw;
 }
 
 body 

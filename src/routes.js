@@ -29,11 +29,11 @@ export const user =
             text: "order history"
         },
         {
-            path: "/account",
-            text: "account details"
-        },
-        {
             path: "/wishlist",
             text: "wishlist"
-        }
+        },
+        {
+            path: "/logout",
+            text: "logout"
+        },
     ];

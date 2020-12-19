@@ -15,12 +15,14 @@ function VerifyAccount ()
     useEffect( () =>
     {
 
+        localStorage.removeItem( "mail" );
+
         const confirmEmail = async () =>
         {
 
             const response = await sendData(
                 {
-                    endpoint: `confirm-email${ search }`
+                    endpoint: `user/confirm-email${ search }`
                 } );
 
             if ( !response.error )

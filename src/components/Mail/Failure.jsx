@@ -21,23 +21,20 @@ function Failure ( { id } )
 
     const checkEmail = async () =>
     {
-        const response = await sendData(
+        const { data: { message } } = await sendData(
             {
-                endpoint: `trouble-account?id=${ id }`
+                endpoint: `user/trouble-account?id=${ id }`
             } );
 
-        if ( response.error )
-        {
-            setHasSent( true );
 
-        }
-        else if ( response.data.message === "User has already been verified" )
+
+        if ( message === "User has already been verified" )
         {
             history.push( "/sign-in" );
         }
         else 
         {
-            console.log( response );
+
             setContent(
                 (
 
@@ -74,11 +71,7 @@ function Failure ( { id } )
 
                             <br />  <br />
 
-                            <p>Click the link below, and more instructions will be sent to your mail</p>
-
-
-
-
+                            <p>Click the link below to proceed</p>
 
                             <button onClick={ checkEmail } className={ classes.Link } >
                                 Trouble verifying account
