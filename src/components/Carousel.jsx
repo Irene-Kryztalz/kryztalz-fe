@@ -7,7 +7,7 @@ const getArrangement = ( activeIndex, length ) =>
 {
     let arr = [];
     const middle = parseInt( length / 2 );
-    const offset = window.innerWidth >= 500 ? 40 : 15;
+    const offset = window.innerWidth >= 500 ? 70 : 15;
 
     arr[ middle ] =
     {
@@ -110,7 +110,6 @@ const Slider = styled.div`
 
 const SIZE = 3;
 
-
 function Carousel ()
 {
     const { gems } = useContext( AppContext );
@@ -131,7 +130,6 @@ function Carousel ()
     useEffect( () =>
     {
         setItems( gems.slice( 0, SIZE ) );
-
     }, [ gems ] );
 
     useEffect( () =>
@@ -152,8 +150,6 @@ function Carousel ()
                     style={ { transform: getPos( index, arr ) } }
                 >
                     <GemCard
-                        goTo={ () => { } }
-                        setActiveGem={ () => { } }
                         _id={ gem._id }
                         name={ gem.name }
                         price={ gem.price }

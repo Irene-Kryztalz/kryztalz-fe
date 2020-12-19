@@ -22,6 +22,8 @@ class AppProvider extends Component
 
     componentDidMount ()
     {
+
+        this.hydrate();
         let base;
 
         if ( !process.env.NODE_ENV || process.env.NODE_ENV === 'development' )
@@ -31,15 +33,20 @@ class AppProvider extends Component
         } else
         {
             base = process.env.REACT_APP_SERVER;
+            fetch( `${ base }/` )
+                .then( res => res.json() )
+                .catch( err => console.error( err ) );
         }
         if ( !this.state.currencies[ "ngn" ] )
         {
+            const isAuth = this.checkExpiredToken();
             fetch( "./currency-country.json" )
                 .then( resp => resp.json() )
                 .then( curr =>
                 {
                     this.setState(
                         {
+                            isAuth,
                             activeCurr: "ngn",
                             baseUrl: base,
                             currencies: this.formatData( curr )
@@ -55,8 +62,6 @@ class AppProvider extends Component
         this.setState( { activeCurr: curr } );
     };
 
-
-
     sendData = async ( { endpoint, formData, method = "GET", headers, setLoad = true } ) =>
     {
         method = method.toUpperCase();
@@ -67,7 +72,7 @@ class AppProvider extends Component
         headers =
         {
             ...headers,
-            Authorization: `Bearer ${ localStorage.getItem( "kryztalz-token" ) }`
+            Authorization: `Bearer ${ localStorage.getItem( "token" ) }`
         };
 
         let response,
@@ -125,7 +130,6 @@ class AppProvider extends Component
 
     };
 
-
     formatData = ( currencies ) =>
     {
         const formatted = {};
@@ -141,22 +145,26 @@ class AppProvider extends Component
         return formatted;
     };
 
-    login = ( token ) =>
+    login = ( { token, cart, wishlist, expires } ) =>
     {
-        localStorage.setItem( 'kryztalz-token', token );
-        this.setState( { isAuth: true } );
+        localStorage.setItem( 'token', token );
+        localStorage.setItem( 'cart', JSON.stringify( cart ) );
+        localStorage.setItem( 'wishlist', JSON.stringify( wishlist ) );
+
+        localStorage.setItem( 'token-exp', expires );
+        this.setState( { isAuth: true, cart, wishlist } );
 
     };
 
     logout = () =>
     {
         this.setState( { isAuth: false } );
-        localStorage.removeItem( 'kryztalz-token' );
+        localStorage.removeItem( 'token' );
     };
 
     setGems = ( items ) =>
     {
-        if ( !this.state.gems.length )
+        if ( !this.state.gems.length && items )
         {
             const { gems, count } = items;
             this.setState( { gems, count } );
@@ -172,6 +180,51 @@ class AppProvider extends Component
         }
     };
 
+    hydrate = () =>
+    {
+        const cart = JSON.parse( localStorage.getItem( "cart" ) );
+        const wishlist = JSON.parse( localStorage.getItem( "wishlist" ) );
+
+        if ( cart && wishlist )
+        {
+            this.setState( { cart, wishlist } );
+        }
+    };
+
+    checkExpiredToken = () =>
+    {
+        const now = new Date().getTime();
+        const token = localStorage.getItem( "token" );
+        const expires = +localStorage.getItem( "token-exp" );
+        const diff = ( expires && token ) ? expires - now : 0;
+        return diff > 0 ? true : false;
+    };
+
+    updateCart = ( gemId, quantity, remove = false ) =>
+    {
+        if ( remove )
+        {
+
+        }
+        else
+        {
+            console.log( gemId );
+        }
+    };
+
+    updateWishlist = ( gemId, quantity, remove = false ) =>
+    {
+        if ( remove )
+        {
+
+        }
+        else
+        {
+            console.log( gemId );
+        }
+    };
+
+
 
     render ()
     {
@@ -181,8 +234,11 @@ class AppProvider extends Component
                     ...this.state,
                     changeCurr: this.changeCurr,
                     login: this.login,
+                    logout: this.logout,
                     sendData: this.sendData,
-                    setGems: this.setGems
+                    setGems: this.setGems,
+                    updateCart: this.updateCart,
+                    updateWishlist: this.updateWishlist
                 } }>
                 { this.props.children }
             </AppContext.Provider>

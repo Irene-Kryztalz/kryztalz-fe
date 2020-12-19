@@ -25,34 +25,38 @@ function TextLike ( props )
 
 
     return (
-        <div className={ props.classNamesGroup }>
-            <label className={ props.classNamesLabel } htmlFor={ props.name }>{ props.label }</label>
-            <input
-                onChange={ props.changeHandler }
-                autoFocus={ props.shouldAutoFocus }
-                onKeyPress={ props.keypress }
-                className={ props.classNamesInput }
-                inputMode={ props.control }
-                placeholder={ props.placeholder }
-                data-ispassword={ initialState === "password" ? "password" : null }
-                type={ props.control === "password" ? changePtype( showPassword ) : props.control }
-                value={ props.value }
-                id={ props.name }
-                name={ props.name } />
-            {
-                initialState === "password" ?
-                    <span onClick={ toggleP } >
+        <>
+            <div className={ props.classNamesGroup }>
+                <label className={ props.classNamesLabel } htmlFor={ props.name }>{ props.label }</label>
+                <input
+                    onChange={ props.changeHandler }
+                    autoFocus={ props.shouldAutoFocus }
+                    onKeyPress={ props.keypress }
+                    className={ props.classNamesInput }
+                    inputMode={ props.control }
+                    placeholder={ props.placeholder }
+                    data-ispassword={ initialState === "password" ? "password" : null }
+                    type={ props.control === "password" ? changePtype( showPassword ) : props.control }
+                    value={ props.value }
+                    id={ props.name }
+                    name={ props.name } />
+                {
+                    initialState === "password" ?
+                        <span onClick={ toggleP } >
 
-                        {
-                            !showPassword ? <i className="fas fa-eye"></i> : <i className="fas fa-eye-slash"></i>
-                        }
+                            {
+                                !showPassword ? <i className="fas fa-eye"></i> : <i className="fas fa-eye-slash"></i>
+                            }
 
 
-                    </span> : null
-            }
+                        </span> : null
+                }
 
-            {props.touched && !props.valid && <InputError message={ props.message } /> }
-        </div>
+            </div>
+
+
+            { props.touched && !props.valid && <InputError message={ props.message } /> }
+        </>
     );
 }
 

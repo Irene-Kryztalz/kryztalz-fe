@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-//import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import useForm from "../hooks/useForm";
 import AppContext from "../Context";
 import Auth from "../components/Auth/Auth";
@@ -37,6 +37,7 @@ const config =
 
 function SignIn () 
 {
+    const history = useHistory();
     const [ formState, changeHandler ] = useForm( config );
     const { login, sendData } = useContext( AppContext );
 
@@ -65,8 +66,9 @@ function SignIn ()
         }
         else
         {
-            login( response.data.user.token );
-            console.log( response.data.user );
+            const { token, cart, wishlist, expires } = response.data.user;
+            login( { token, cart, wishlist, expires } );
+            history.push( "/products" );
         }
 
 

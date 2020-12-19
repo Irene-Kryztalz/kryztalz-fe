@@ -1,10 +1,25 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { Link } from "react-router-dom";
 import classes from "./GemCard.module.css";
 import Button from "../Button";
+import AppContext from "../../Context";
+
 
 function GemCard ( props )
 {
-    const { name, price, image, type, _id, setActiveGem, cutType, goTo } = props;
+    const { name, price, image, type, _id, cutType } = props;
+    const { updateWishlist, updateCart } = useContext( AppContext );
+
+    const addToWishlist = ( id ) =>
+    {
+        updateWishlist( id, 1 );
+    };
+
+    const addToCart = ( id ) =>
+    {
+        updateCart( id, 1 );
+    };
+
     return (
         <article className={ classes.Card }>
 
@@ -24,30 +39,37 @@ function GemCard ( props )
 
                 <div className={ classes.Actions }>
                     <Button
-
+                        font="1rem"
+                        margin="0 0 5px 0"
                         color="var(--gold)"
                         bg="#000"
                         pad="5px"
-                        fs="0.9rem"
-                        onClick={ ( e ) => { e.stopPropagation(); goTo( _id ); } }
+                        onClick={ () => addToCart( _id ) }
                         to={ `/edit-gem/${ _id }` }>
                         <i className="far fa-edit"></i>
-                      &nbsp;  Edit
+                      &nbsp;  Add to cart
                     </Button>
 
                     <Button
                         color="#fff"
                         bg="var(--err-red)"
                         pad="5px"
-                        fs="0.9rem"
-                        onClick={ ( e ) => { e.stopPropagation(); setActiveGem( e, { image, _id, name, price, type } ); } }>
+                        font="1rem"
+                        onClick={ () => addToWishlist( _id ) }>
                         <i className="far fa-trash-alt"></i>
-                      &nbsp;   Delete
+                      &nbsp;   Add to wishlist
                     </Button>
 
                 </div>
 
-
+                <Button
+                    font="1rem"
+                    margin="0 0 5px 0"
+                    bg="#ccc"
+                    as={ Link }
+                    to={ `/product/${ _id }` } >
+                    Read more...
+                 </Button>
 
             </section >
 

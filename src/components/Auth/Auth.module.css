@@ -127,3 +127,13 @@
         max-width: 150px;
     }
 }
+
+
+@media screen and (min-width:998px)
+{
+  
+    .FormWrap
+    {
+       transform: translateY(30px);
+    }
+}
