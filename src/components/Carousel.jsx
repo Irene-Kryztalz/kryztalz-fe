@@ -1,7 +1,9 @@
 import React, { useContext, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import GemCard from "./GemCard/GemCard";
+import LoadMore from "./LoadMore/LoadMore";
 import AppContext from "../Context";
+
 
 const getArrangement = ( activeIndex, length ) =>
 {
@@ -53,8 +55,6 @@ const getPos = ( i, arr ) =>
     return item.style;
 };
 
-
-
 const Slider = styled.div`
     width: 250px;
     height: 100vh;
@@ -69,14 +69,7 @@ const Slider = styled.div`
     @media screen and (min-width:500px)
     {
         min-width:300px;
-    }
-
-     @media screen and (orientation:landscape) and (max-height:600px)
-    {
-       
-        margin:90px auto;
-    }
-    
+    }   
 
     .controls
     {
@@ -112,10 +105,12 @@ const SIZE = 3;
 
 function Carousel ()
 {
-    const { gems } = useContext( AppContext );
+
+    const { gems, sendData, setGems } = useContext( AppContext );
     const [ checked, setChecked ] = useState( 0 );
     const [ arr, setArr ] = useState( getArrangement( 0, SIZE ) );
     const [ items, setItems ] = useState( [] );
+    const [ retry, setRetry ] = useState( false );
 
     const change = e =>
     {
@@ -130,33 +125,66 @@ function Carousel ()
     useEffect( () =>
     {
         setItems( gems.slice( 0, SIZE ) );
+        const timer = setTimeout( () =>
+        {
+            if ( !gems.length )
+            {
+                setRetry( true );
+            }
+        }, 5 * 1000 );
+
+        return () => clearTimeout( timer );
     }, [ gems ] );
 
     useEffect( () =>
     {
-        const resize = () => { setArr( getArrangement( 0, SIZE ) ); };
+        const resize = () => 
+        {
+            setArr( getArrangement( 0, SIZE ) );
+        };
+
         window.addEventListener( "resize", resize );
 
         return () => window.removeEventListener( "resize", resize );
     }, [] );
 
+
+    const getGems = async () =>
+    {
+        setRetry( false );
+        const { data } = await sendData(
+            {
+                endpoint: "shop/gems",
+                setLoad: false
+            }
+        );
+
+        setGems( data );
+    };
+
+
     return (
         <Slider>
 
             {
-                items.map( ( gem, index ) => <label
-                    key={ gem._id }
-                    htmlFor={ index }
-                    style={ { transform: getPos( index, arr ) } }
-                >
-                    <GemCard
-                        _id={ gem._id }
-                        name={ gem.name }
-                        price={ gem.price }
-                        image={ gem.imageUrls[ 0 ] }
-                        cutType={ gem.cutType }
-                        type={ gem.type } />
-                </label> )
+                !items.length ? <LoadMore
+                    loading={ items.length && retry }
+                    click={ getGems }
+                />
+                    :
+                    items.map( ( gem, index ) => <label
+                        key={ gem._id }
+                        htmlFor={ index }
+                        style={ { transform: getPos( index, arr ) } }
+                    >
+                        <GemCard
+                            _id={ gem._id }
+                            name={ gem.name }
+                            price={ gem.price }
+                            image={ gem.imageUrls[ 0 ] }
+                            cutType={ gem.cutType }
+                            type={ gem.type } />
+                    </label> )
             }
 
             <div className="controls">

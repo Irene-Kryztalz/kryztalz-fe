@@ -11,7 +11,7 @@ import avatar from "../../../assets/images/user.svg";
 
 import classes from "./MobileNav.module.css";
 
-function MobileNav ( { menuOpen, search, currMenuOpen, toggleCurrMenu, toggleSearch, toggleMenu } )
+function MobileNav ( { menuOpen, search, close, currMenuOpen, toggleCurrMenu, toggleSearch, toggleMenu } )
 {
     const { cart: cartItems, isAuth } = useContext( AppContext );
 
@@ -21,7 +21,7 @@ function MobileNav ( { menuOpen, search, currMenuOpen, toggleCurrMenu, toggleSea
             <header className={ classes.TopNav }>
 
                 <div className={ classes.LogoCurrency }>
-                    <NavLink to="/" className={ classes.Logo }>
+                    <NavLink onClick={ close } to="/" className={ classes.Logo }>
                         <img src={ logo } alt="kryztalz logo, a diamond shape" />
                     </NavLink>
 
@@ -47,13 +47,13 @@ function MobileNav ( { menuOpen, search, currMenuOpen, toggleCurrMenu, toggleSea
 
                 <div className={ classes.BNWrap }>
 
-                    <NavLink to="/cart" className={ [ classes.FooterIcon, classes.Cart ].join( " " ) }>
+                    <NavLink onClick={ close } to="/cart" className={ [ classes.FooterIcon, classes.Cart ].join( " " ) }>
                         <img src={ cart } alt="cart icon showing number of items in cart" />
 
                         <p title={ `${ cartItems.length } items in cart` }>{ cartItems.length }</p>
                     </NavLink>
 
-                    <NavLink activeClassName={ classes.Active } className={ classes.Link } to={ normal[ 0 ].path }>
+                    <NavLink onClick={ close } activeClassName={ classes.Active } className={ classes.Link } to={ normal[ 0 ].path }>
                         { normal[ 0 ].text }
                     </NavLink>
 
