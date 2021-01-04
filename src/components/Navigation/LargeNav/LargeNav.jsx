@@ -10,7 +10,7 @@ import cart from "../../../assets/images/cart-icon.svg";
 import avatar from "../../../assets/images/user.svg";
 import classes from "./LargeNav.module.css";
 
-function LargeNav ( { menuOpen, currMenuOpen, toggleCurrMenu, toggleMenu } )
+function LargeNav ( { menuOpen, currMenuOpen, toggleCurrMenu, close, toggleMenu } )
 {
     const { cart: cartItems, isAuth } = useContext( AppContext );
 
@@ -20,7 +20,7 @@ function LargeNav ( { menuOpen, currMenuOpen, toggleCurrMenu, toggleMenu } )
 
             <div className={ classes.LogoSearch }>
                 <NavLink to="/" className={ classes.Logo }>
-                    <img src={ logo } alt="kryztalz logo, a diamond shape" />
+                    <img onClick={ close } src={ logo } alt="kryztalz logo, a diamond shape" />
                 </NavLink>
 
                 <SearchInput />
@@ -33,7 +33,7 @@ function LargeNav ( { menuOpen, currMenuOpen, toggleCurrMenu, toggleMenu } )
                 {
                     normal.map( link => 
                     {
-                        const a = <NavLink exact activeClassName={ classes.Active } className={ classes.Link } key={ link.path } to={ link.path }>{ link.text }</NavLink>;
+                        const a = <NavLink onClick={ close } exact activeClassName={ classes.Active } className={ classes.Link } key={ link.path } to={ link.path }>{ link.text }</NavLink>;
 
                         return a;
                     } )
@@ -41,7 +41,7 @@ function LargeNav ( { menuOpen, currMenuOpen, toggleCurrMenu, toggleMenu } )
 
                 }
 
-                <NavLink to="/cart" className={ classes.Cart }>
+                <NavLink onClick={ close } to="/cart" className={ classes.Cart }>
                     <img src={ cart } alt="cart icon showing number of items in cart" />
                     <p title={ `${ cartItems.length } items in cart` }>{ cartItems.length }</p>
                 </NavLink>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import LargeNav from "./LargeNav/LargeNav";
 import MobileNav, { } from "./MobileNav/MobileNav";
 
@@ -15,6 +15,17 @@ function Navigation ()
         setMenuOpen( false );
         setSearch( false );
     };
+
+    useEffect( () =>
+    {
+        const resize = () => 
+        {
+            closeAll();
+        };
+        window.addEventListener( "resize", resize );
+        return () => window.removeEventListener( "resize", resize );
+
+    }, [] );
 
     const toggleMenu = () => 
     {
@@ -41,6 +52,7 @@ function Navigation ()
                 menuOpen={ menuOpen }
                 toggleMenu={ toggleMenu }
                 toggleCurrMenu={ toggleCurrMenu }
+                close={ closeAll }
             />
             <MobileNav
                 search={ search }
@@ -49,6 +61,7 @@ function Navigation ()
                 toggleSearch={ toggleSearch }
                 toggleMenu={ toggleMenu }
                 menuOpen={ menuOpen }
+                close={ closeAll }
             />
         </>
     );

@@ -4,7 +4,7 @@ import AppContext from "../Context";
 
 function Products () 
 {
-    const { gems, sendData, count } = useContext( AppContext );
+    const { gems } = useContext( AppContext );
 
 
     return (

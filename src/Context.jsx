@@ -22,7 +22,6 @@ class AppProvider extends Component
 
     componentDidMount ()
     {
-
         this.hydrate();
         let base;
 
@@ -91,13 +90,12 @@ class AppProvider extends Component
             }
             else
             {
-                response = await Promise.race( [ fetch( `${ url }/${ endpoint }`,
+                response = await fetch( `${ url }/${ endpoint }`,
                     {
                         method,
                         headers,
                         body: formData
-                    } ), new Promise( ( _, reject ) => setTimeout( () => reject( new Error( "Timeout" ) )
-                        , 10000 ) ) ] );
+                    } );
             }
 
             if ( response.ok )
@@ -200,27 +198,109 @@ class AppProvider extends Component
         return diff > 0 ? true : false;
     };
 
-    updateCart = ( gemId, quantity, remove = false ) =>
+    updateCart = async ( gem, quantity, remove = false ) =>
     {
+        const gemId = gem._id;
+        let cart = [ ...this.state.cart ];
         if ( remove )
         {
+            cart = cart.filter( g => g.gemId._id !== gemId );
+            const { data } = await this.sendData(
+                {
+                    endpoint: "shop/remove-cart",
+                    method: "post",
+                    formData: JSON.stringify( { gemId } ),
+                    setLoad: false,
+                    headers:
+                    {
+                        "Content-Type": "application/json"
+                    }
+                }
+            );
+
+            if ( data )
+            {
+                localStorage.setItem( "cart", JSON.stringify( cart ) );
+                this.setState( { cart } );
+            }
 
         }
         else
         {
-            console.log( gemId );
+            const index = cart.findIndex( g => g.gemId._id === gemId );
+
+            if ( index > -1 )
+            {
+                cart[ index ].quantity += quantity;
+                if ( cart[ index ].quantity <= 0 )
+                {
+                    cart = cart.filter( g => g.gemId._id !== gemId );
+                }
+            }
+            else
+            {
+                cart.push( { gemId: gem, quantity } );
+            }
+
+            const { data } = await this.sendData(
+                {
+                    endpoint: "shop/add-cart",
+                    method: "post",
+                    formData: JSON.stringify( { gemId, quantity } ),
+                    setLoad: false,
+                    headers:
+                    {
+                        "Content-Type": "application/json"
+                    }
+                }
+            );
+
+            if ( data )
+            {
+                localStorage.setItem( "cart", JSON.stringify( cart ) );
+                this.setState( { cart } );
+            }
+
         }
     };
 
-    updateWishlist = ( gemId, quantity, remove = false ) =>
+    updateWishlist = async ( gem, remove = false ) =>
     {
+        const gemId = gem._id;
+        let wishlist = [ ...this.state.wishlist ];
         if ( remove )
         {
-
+            wishlist = wishlist.filter( g => g.gemId._id !== gemId );
         }
         else
         {
-            console.log( gemId );
+            const index = wishlist.findIndex( g => g.gemId._id === gemId );
+
+            if ( index < 0 )
+            {
+                wishlist.push( { gemId: gem } );
+            }
+
+            const { data } = await this.sendData(
+                {
+                    endpoint: "shop/add-wishlist",
+                    method: "post",
+                    formData: JSON.stringify( { gemId } ),
+                    setLoad: false,
+                    headers:
+                    {
+                        "Content-Type": "application/json"
+                    }
+                }
+            );
+
+            if ( data )
+            {
+
+                localStorage.setItem( "wishlist", JSON.stringify( wishlist ) );
+                this.setState( { wishlist } );
+            }
+
         }
     };
 

@@ -36,16 +36,7 @@ const Container = styled.div`
             padding-right: 8px;
             padding-left: 3px;
         }
-    }
-   
-   
-   
-   
-   
-   
-   
-   
-   
+    } 
    
    
 

@@ -15,6 +15,8 @@ const Button = styled.button.attrs( props => (
     transition:transform 0.1s ease-in-out;
     text-transform:${ props => props.case || "capitalize" };
     border-radius:${ props => props.radius || "2px" };
+    border:${ props => props.border || "none" };
+    font-family:  'Crimson Pro', serif;
 
     &:hover 
     {
