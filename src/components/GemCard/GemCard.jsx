@@ -2,13 +2,16 @@ import React, { useContext } from 'react';
 import { Link } from "react-router-dom";
 import classes from "./GemCard.module.css";
 import Button from "../Button";
+import Rates from "../Rates";
 import AppContext from "../../Context";
 
 
 function GemCard ( props )
 {
     const { name, price, image, type, _id, cutType } = props;
-    const { updateWishlist, updateCart, isAuth } = useContext( AppContext );
+    const { updateWishlist, updateCart, isAuth, activeCurr, currencies } = useContext( AppContext );
+
+    const symbol = currencies[ activeCurr ].currencySymbol;
 
     const addToWishlist = ( gem ) =>
     {
@@ -32,7 +35,7 @@ function GemCard ( props )
                 <div className={ classes.Info }>
                     <h3 className={ classes.Title }>{ name }</h3>
                     <p className={ classes.Price }>
-                        ₦ { price } per { cutType === "none" ? "gram" : "carat" }
+                        { symbol } { <Rates price={ price } /> } per { cutType === "none" ? "gram" : "carat" }
                     </p>
                     <p className={ classes.Type }>{ type }</p>
                 </div>
