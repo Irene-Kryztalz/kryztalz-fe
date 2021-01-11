@@ -1,9 +1,8 @@
 import React, { useContext, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import GemCard from "./GemCard/GemCard";
-import LoadMore from "./LoadMore/LoadMore";
 import AppContext from "../Context";
-
+import Button from "./Button";
 
 const getArrangement = ( activeIndex, length ) =>
 {
@@ -101,16 +100,16 @@ const Slider = styled.div`
 
 `;
 
+
 const SIZE = 3;
 
 function Carousel ()
 {
 
-    const { gems, sendData, setGems } = useContext( AppContext );
+    const { gems, sendData, loading, setGems } = useContext( AppContext );
     const [ checked, setChecked ] = useState( 0 );
     const [ arr, setArr ] = useState( getArrangement( 0, SIZE ) );
     const [ items, setItems ] = useState( [] );
-    const [ retry, setRetry ] = useState( false );
 
     const change = e =>
     {
@@ -125,15 +124,7 @@ function Carousel ()
     useEffect( () =>
     {
         setItems( gems.slice( 0, SIZE ) );
-        const timer = setTimeout( () =>
-        {
-            if ( !gems.length )
-            {
-                setRetry( true );
-            }
-        }, 5 * 1000 );
 
-        return () => clearTimeout( timer );
     }, [ gems ] );
 
     useEffect( () =>
@@ -151,7 +142,7 @@ function Carousel ()
 
     const getGems = async () =>
     {
-        setRetry( false );
+
         const { data } = await sendData(
             {
                 endpoint: "shop/gems",
@@ -167,24 +158,23 @@ function Carousel ()
         <Slider>
 
             {
-                !items.length ? <LoadMore
-                    loading={ items.length && retry }
-                    click={ getGems }
-                />
-                    :
-                    items.map( ( gem, index ) => <label
-                        key={ gem._id }
-                        htmlFor={ index }
-                        style={ { transform: getPos( index, arr ) } }
-                    >
-                        <GemCard
-                            _id={ gem._id }
-                            name={ gem.name }
-                            price={ gem.price }
-                            image={ gem.imageUrls[ 0 ] }
-                            cutType={ gem.cutType }
-                            type={ gem.type } />
-                    </label> )
+                !gems.length && !loading && <Button onClick={ getGems }> Retry </Button>
+            }
+
+            {
+                items.map( ( gem, index ) => <label
+                    key={ gem._id }
+                    htmlFor={ index }
+                    style={ { transform: getPos( index, arr ) } }
+                >
+                    <GemCard
+                        _id={ gem._id }
+                        name={ gem.name }
+                        price={ gem.price }
+                        image={ gem.imageUrls[ 0 ] }
+                        cutType={ gem.cutType }
+                        type={ gem.type } />
+                </label> )
             }
 
             <div className="controls">

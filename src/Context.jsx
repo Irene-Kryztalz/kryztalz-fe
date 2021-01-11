@@ -9,8 +9,9 @@ class AppProvider extends Component
     state =
         {
             cart: [],
+            rates: {},
             wishlist: [],
-            loading: false,
+            loading: true,
             currencies: {},
             activeCurr: "",
             isAuth: false,
@@ -20,22 +21,32 @@ class AppProvider extends Component
 
         };
 
-    componentDidMount ()
+    init = () =>
     {
-        this.hydrate();
         let base;
-
         if ( !process.env.NODE_ENV || process.env.NODE_ENV === 'development' )
         {
             base = "http://localhost:7272";
-
-        } else
+        }
+        else
         {
             base = process.env.REACT_APP_SERVER;
-            fetch( `${ base }/` )
-                .then( res => res.json() )
-                .catch( err => console.error( err ) );
         }
+
+        fetch( `${ base }/shop/rates` )
+            .then( res => res.json() )
+            .then( rates => this.setState( { baseUrl: base, rates } ) )
+            .catch( err => console.error( err ) );
+
+
+    };
+
+    componentDidMount ()
+    {
+        this.hydrate();
+        this.init();
+
+
         if ( !this.state.currencies[ "ngn" ] )
         {
             const isAuth = this.checkExpiredToken();
@@ -47,7 +58,6 @@ class AppProvider extends Component
                         {
                             isAuth,
                             activeCurr: "ngn",
-                            baseUrl: base,
                             currencies: this.formatData( curr )
                         }
                     );
@@ -318,7 +328,8 @@ class AppProvider extends Component
                     sendData: this.sendData,
                     setGems: this.setGems,
                     updateCart: this.updateCart,
-                    updateWishlist: this.updateWishlist
+                    updateWishlist: this.updateWishlist,
+                    init: this.init
                 } }>
                 { this.props.children }
             </AppContext.Provider>
