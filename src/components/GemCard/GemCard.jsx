@@ -11,7 +11,7 @@ function GemCard ( props )
     const { name, price, image, type, _id, cutType } = props;
     const { updateWishlist, updateCart, isAuth, activeCurr, currencies } = useContext( AppContext );
 
-    const symbol = currencies[ activeCurr ].currencySymbol;
+    const symbol = activeCurr ? currencies[ activeCurr ].currencySymbol : "₦";
 
     const addToWishlist = ( gem ) =>
     {

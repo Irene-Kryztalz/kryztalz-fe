@@ -6,7 +6,7 @@ import HomePage from "./pages/HomePage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import FilteredGems from "./pages/FilteredGems";
 import Logout from './pages/Logout';
-
+import ErrorBoundary from "./components/ErrorBoundary";
 
 import './App.css';
 
@@ -27,48 +27,49 @@ function App ()
   return (
     <Suspense fallback={ <div /> }>
       <AppProvider>
-        <Navigation />
-        <Main>
-          <Switch>
-            <Route exact path="/sign-up">
-              <SignUp />
-            </Route>
-            <Route exact path="/sign-in">
-              <SignIn />
-            </Route>
-            <Route path="/verify-account">
-              <VerifyAccount />
-            </Route>
-            <Route path="/after-reg">
-              <AfterSignUp />
-            </Route>
-            <Route path="/logout">
-              <Logout />
-            </Route>
-            <Route path="/products/filter">
-              <FilteredGems />
-            </Route>
-            <Route exact path="/products">
-              <Products />
-            </Route>
+        <ErrorBoundary>
+          <Navigation />
+          <Main>
+            <Switch>
+              <Route exact path="/sign-up">
+                <SignUp />
+              </Route>
+              <Route exact path="/sign-in">
+                <SignIn />
+              </Route>
+              <Route path="/verify-account">
+                <VerifyAccount />
+              </Route>
+              <Route path="/after-reg">
+                <AfterSignUp />
+              </Route>
+              <Route path="/logout">
+                <Logout />
+              </Route>
+              <Route path="/products/filter">
+                <FilteredGems />
+              </Route>
+              <Route exact path="/products">
+                <Products />
+              </Route>
 
-            <Route exact path="/cart">
-              <ProtectedRoute>
-                <Cart />
-              </ProtectedRoute>
-            </Route>
-            <Route exact path="/wishlist">
-              <ProtectedRoute>
-                <Wishlist />
-              </ProtectedRoute>
-            </Route>
-            <Route exact path="/">
-              <HomePage />
-            </Route>
-          </Switch>
-        </Main>
+              <Route exact path="/cart">
+                <ProtectedRoute>
+                  <Cart />
+                </ProtectedRoute>
+              </Route>
+              <Route exact path="/wishlist">
+                <ProtectedRoute>
+                  <Wishlist />
+                </ProtectedRoute>
+              </Route>
+              <Route exact path="/">
+                <HomePage />
+              </Route>
+            </Switch>
+          </Main>
+        </ErrorBoundary>
       </AppProvider>
-
     </Suspense>
   );
 }

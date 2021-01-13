@@ -59,7 +59,6 @@ function Filters ()
             }
 
             history.push( url );
-            console.log( type, cutType );
         }
     };
 

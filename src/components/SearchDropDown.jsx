@@ -9,6 +9,7 @@ const DropDown = styled.div`
     position:relative;
     color:var(--gold);
     font-size:1.2rem;
+    z-index:20;
 
     .caret
     {
@@ -93,7 +94,10 @@ function SearchDropDown ( { collection, placeholder, changeHandler, isCut } )
         else
         {
             setOpen( false );
+            changeHandler( "", isCut );
         }
+
+
     };
 
     const clickHandler = ( ev ) =>
