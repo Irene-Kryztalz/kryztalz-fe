@@ -4,10 +4,10 @@ import styled from "styled-components";
 import GemList from "../components/GemList";
 import { parse } from "query-string";
 import AppContext from "../Context";
-import Button from "../components/Button";
 import Filters from "../components/Filters";
 import LoadMore from "../components/LoadMore/LoadMore";
-import { PageError } from "../components/Errors/Errors";
+import RetryError from "../components/RetryError";
+
 
 const Header = styled.h3`
     text-align:center;
@@ -19,9 +19,10 @@ const Header = styled.h3`
 
 `;
 
+
 function FilterPage () 
 {
-    const { sendData, baseUrl } = useContext( AppContext );
+    const { sendData, baseUrl, loading } = useContext( AppContext );
     const [ results, setResults ] = useState( {
         gems: [],
         count: 0,
@@ -73,14 +74,18 @@ function FilterPage ()
         }
         else
         {
-            if ( count )
+            if ( data.gems )
             {
-                const gems = [ ...results.gems, ...data.gems ];
-                setResults( { gems, count: data.count, error: null } );
-            }
-            else
-            {
-                setResults( { gems: [ ...data.gems ], count: data.count, error: null } );
+
+                if ( count )
+                {
+                    const gems = [ ...results.gems, ...data.gems ];
+                    setResults( { gems, count: data.count, error: null } );
+                }
+                else
+                {
+                    setResults( { gems: [ ...data.gems ], count: data.count, error: null } );
+                }
             }
 
         }
@@ -119,16 +124,26 @@ function FilterPage ()
 
                 if ( typeof error === "object" )
                 {
-                    setResults( ( state ) => ( { ...state, error: null } ) );
+                    setResults(
+                        {
+                            gems: [],
+                            count: 0,
+                            error: error.error
+                        }
+                    );
                     return;
                 }
 
                 setResults( ( state ) => ( { ...state, error } ) );
+                return;
             }
 
+            if ( data.gems )
+            {
 
-            setResults( { gems: [ ...data.gems ], count: data.count, error: null } );
+                setResults( { gems: [ ...data.gems ], count: data.count, error: null } );
 
+            }
         };
 
         getGems();
@@ -141,9 +156,13 @@ function FilterPage ()
             <Filters />
 
 
-            <Header>
-                { results.count } result(s) found for { type ? type : "" } { type && cutType && "," } { cutType ? `${ cutType }` : "" }
-            </Header>
+            {
+                !loading &&
+
+                <Header>
+                    { results.count } result(s) found for { type ? type : "" } { type && cutType && "," } { cutType ? `${ cutType }` : "" }
+                </Header>
+            }
 
             <GemList items={ results.gems } />
             {  ( results.count > results.gems.length ) &&
@@ -153,24 +172,23 @@ function FilterPage ()
 
 
             {
-                results.error && !results.count &&
-                <>
-                    <PageError message={ results.error } />
-                    <Button onClick={ filter }>
-                        Retry
-                </Button>
-                </>
+                ( results.error && !results.count ) &&
+
+                <RetryError
+                    message={ results.error }
+                    action={ filter }
+                    btnText="Retry" />
+
             }
 
 
             {
-                results.error && results.count &&
-                <>
-                    <PageError message={ results.error } />
-                    <Button onClick={ filter }>
-                        Retry
-                </Button>
-                </>
+                ( results.error && results.count ) ?
+                    <RetryError
+                        message={ results.error }
+                        action={ filter }
+                        btnText="Try again" />
+                    : null
             }
 
 

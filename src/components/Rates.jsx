@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import AppContext from "../Context";
 
 
@@ -10,8 +10,11 @@ function Rates ( { price } )
     {
         if ( rates.NGN )
         {
+
             const usdToNaira = +rates.NGN;
             const valueToUSD = price / usdToNaira;
+
+
 
             const valueToActiveCurr = valueToUSD * +rates[ activeCurr.toUpperCase() ];
 

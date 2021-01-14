@@ -17,7 +17,7 @@ class AppProvider extends Component
             isAuth: false,
             baseUrl: "",
             gems: [],
-            count: 0
+            count: 0,
 
         };
 
@@ -33,9 +33,11 @@ class AppProvider extends Component
             base = process.env.REACT_APP_SERVER;
         }
 
+        this.setState( { baseUrl: base } );
+
         fetch( `${ base }/shop/rates` )
             .then( res => res.json() )
-            .then( rates => this.setState( { baseUrl: base, rates } ) )
+            .then( rates => this.setState( { rates } ) )
             .catch( err => console.error( err ) );
 
 
@@ -129,9 +131,11 @@ class AppProvider extends Component
             //handle error like server is offline
             //no network
             //or request timeout
+            this.setState( { loading: false } );
             return {
                 error: err.message
             };
+
 
         }
 
