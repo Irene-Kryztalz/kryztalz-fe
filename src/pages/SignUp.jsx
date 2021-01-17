@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useHistory } from "react-router-dom";
 import AppContext from "../Context";
 import useForm from "../hooks/useForm";
@@ -55,11 +55,13 @@ const config =
 function SignUp ()
 {
     const [ formState, changeHandler ] = useForm( config );
+    const [ error, setError ] = useState( "" );
     const { sendData } = useContext( AppContext );
     const history = useHistory();
 
     const handleSubmit = async ev =>
     {
+        setError( null );
         ev.preventDefault();
         const formData = extractFormData( formState.state );
 
@@ -77,8 +79,13 @@ function SignUp ()
 
         if ( response.error )
         {
-            console.log( response );
+            if ( typeof response.error === "string" )
+            {
+                setError( response.error );
+                return;
+            }
 
+            setError( response.error.error );
         }
         else
         {
@@ -97,6 +104,7 @@ function SignUp ()
     return (
         <Auth
             to="sign-in"
+            error={ error }
             submitText="sign up"
             valid={ formState.valid }
             handleSubmit={ handleSubmit }

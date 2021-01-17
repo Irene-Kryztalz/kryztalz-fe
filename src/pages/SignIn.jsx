@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { useHistory } from "react-router-dom";
+import React, { useContext, useState } from 'react';
+import { useHistory, useLocation } from "react-router-dom";
 import useForm from "../hooks/useForm";
 import AppContext from "../Context";
 import Auth from "../components/Auth/Auth";
@@ -38,12 +38,16 @@ const config =
 function SignIn () 
 {
     const history = useHistory();
+    const { pathname } = useLocation();
+    const [ error, setError ] = useState( "" );
     const [ formState, changeHandler ] = useForm( config );
     const { login, sendData } = useContext( AppContext );
 
 
+
     const handleSubmit = async ( ev ) =>
     {
+        setError( null );
         ev.preventDefault();
         const formData = extractFormData( formState.state );
 
@@ -58,17 +62,24 @@ function SignIn ()
                 }
             } );
 
-
         if ( response.error )
         {
-            console.log( response );
+            if ( typeof response.error === "string" )
+            {
+                setError( response.error );
+                return;
+            }
 
+            setError( response.error.error );
         }
         else
         {
             const { token, cart, wishlist, expires } = response.data.user;
             login( { token, cart, wishlist, expires } );
-            history.push( "/products" );
+
+            const path = pathname.includes( "sign" ) ? "/products" : pathname;
+            //get redirect data, eg use cart or order, defaut is /products
+            history.push( path );
         }
 
 
@@ -79,6 +90,7 @@ function SignIn ()
     return (
         <Auth
             to="sign-up"
+            error={ error }
             submitText="sign in"
             valid={ formState.valid }
             handleSubmit={ handleSubmit }

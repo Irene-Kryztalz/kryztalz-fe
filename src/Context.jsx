@@ -9,33 +9,47 @@ class AppProvider extends Component
     state =
         {
             cart: [],
+            rates: {},
             wishlist: [],
-            loading: false,
+            loading: true,
             currencies: {},
             activeCurr: "",
             isAuth: false,
             baseUrl: "",
             gems: [],
-            count: 0
+            count: 0,
+            orders: []
 
         };
+
+    init = () =>
+    {
+        let base;
+        if ( !process.env.NODE_ENV || process.env.NODE_ENV === 'development' )
+        {
+            base = "http://localhost:7272";
+        }
+        else
+        {
+            base = process.env.REACT_APP_SERVER;
+        }
+
+        this.setState( { baseUrl: base } );
+
+        fetch( `${ base }/shop/rates` )
+            .then( res => res.json() )
+            .then( rates => this.setState( { rates } ) )
+            .catch( err => console.error( err ) );
+
+
+    };
 
     componentDidMount ()
     {
         this.hydrate();
-        let base;
+        this.init();
 
-        if ( !process.env.NODE_ENV || process.env.NODE_ENV === 'development' )
-        {
-            base = "http://localhost:7272";
 
-        } else
-        {
-            base = process.env.REACT_APP_SERVER;
-            fetch( `${ base }/` )
-                .then( res => res.json() )
-                .catch( err => console.error( err ) );
-        }
         if ( !this.state.currencies[ "ngn" ] )
         {
             const isAuth = this.checkExpiredToken();
@@ -47,7 +61,6 @@ class AppProvider extends Component
                         {
                             isAuth,
                             activeCurr: "ngn",
-                            baseUrl: base,
                             currencies: this.formatData( curr )
                         }
                     );
@@ -119,9 +132,11 @@ class AppProvider extends Component
             //handle error like server is offline
             //no network
             //or request timeout
+            this.setState( { loading: false } );
             return {
                 error: err.message
             };
+
 
         }
 
@@ -304,6 +319,26 @@ class AppProvider extends Component
         }
     };
 
+    clearCartOrWishList = ( isCart ) =>
+    {
+        if ( isCart )
+        {
+            localStorage.setItem( "cart", JSON.stringify( [] ) );
+            this.setState( { cart: [] } );
+        }
+        else
+        {
+            localStorage.setItem( "wishlist", JSON.stringify( [] ) );
+            this.setState( { wishlist: [] } );
+        }
+
+    };
+
+    updateOrders = ( orders ) =>
+    {
+        this.setState( { orders } );
+    };
+
 
 
     render ()
@@ -318,7 +353,10 @@ class AppProvider extends Component
                     sendData: this.sendData,
                     setGems: this.setGems,
                     updateCart: this.updateCart,
-                    updateWishlist: this.updateWishlist
+                    updateWishlist: this.updateWishlist,
+                    init: this.init,
+                    clearCartOrWishList: this.clearCartOrWishList,
+                    updateOrders: this.updateOrders
                 } }>
                 { this.props.children }
             </AppContext.Provider>

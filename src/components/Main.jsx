@@ -4,28 +4,30 @@ import AppContext from "../Context";
 
 function Main ( { children } )
 {
-    const { loading, setGems, sendData } = useContext( AppContext );
+
+    const { init, loading, setGems, sendData, baseUrl } = useContext( AppContext );
 
     useEffect( () =>
     {
+        if ( !baseUrl )
+        {
+            init();
+        }
 
         const getGems = async () =>
         {
             const { data } = await sendData(
                 {
-                    endpoint: "shop/gems",
-                    setLoad: false
+                    endpoint: "shop/gems"
                 }
             );
 
             setGems( data );
         };
 
-        const timer = setTimeout( getGems, 500 );
+        getGems();
 
-        return () => clearTimeout( timer );
-
-    }, [ sendData, setGems ] );
+    }, [ sendData, setGems, init, baseUrl ] );
 
     return (
         <main>

@@ -8,12 +8,18 @@ import { joinClasses } from "../../utils/joinClasses";
 import classes from "./Auth.module.css";
 import logo from "../../assets/images/logo-small.svg";
 
+import { PageError } from "../Errors/Errors";
 
 function Auth ( { fields, ...props } ) 
 {
 
     return (
         <div className={ classes.FormWrap }>
+
+
+            {
+                props.error && <PageError message={ props.error } />
+            }
 
             <form onSubmit={ props.handleSubmit } method="post">
                 <Button to={ `/${ props.to }` } as={ Link } className={ classes.SwitchForm }>
