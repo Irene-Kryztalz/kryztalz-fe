@@ -39,7 +39,8 @@ function TextLike ( props )
                     type={ props.control === "password" ? changePtype( showPassword ) : props.control }
                     value={ props.value }
                     id={ props.name }
-                    name={ props.name } />
+                    name={ props.name }
+                />
                 {
                     initialState === "password" ?
                         <span onClick={ toggleP } >

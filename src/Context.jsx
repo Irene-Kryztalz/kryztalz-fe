@@ -18,6 +18,7 @@ class AppProvider extends Component
             baseUrl: "",
             gems: [],
             count: 0,
+            orders: []
 
         };
 
@@ -318,6 +319,26 @@ class AppProvider extends Component
         }
     };
 
+    clearCartOrWishList = ( isCart ) =>
+    {
+        if ( isCart )
+        {
+            localStorage.setItem( "cart", JSON.stringify( [] ) );
+            this.setState( { cart: [] } );
+        }
+        else
+        {
+            localStorage.setItem( "wishlist", JSON.stringify( [] ) );
+            this.setState( { wishlist: [] } );
+        }
+
+    };
+
+    updateOrders = ( orders ) =>
+    {
+        this.setState( { orders } );
+    };
+
 
 
     render ()
@@ -333,7 +354,9 @@ class AppProvider extends Component
                     setGems: this.setGems,
                     updateCart: this.updateCart,
                     updateWishlist: this.updateWishlist,
-                    init: this.init
+                    init: this.init,
+                    clearCartOrWishList: this.clearCartOrWishList,
+                    updateOrders: this.updateOrders
                 } }>
                 { this.props.children }
             </AppContext.Provider>

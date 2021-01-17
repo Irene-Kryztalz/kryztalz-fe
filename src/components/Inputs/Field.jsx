@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import TextLike from "./TextLike";
+import Textarea from "./Textarea";
 
 function Field ( props )
 {
@@ -10,6 +11,10 @@ function Field ( props )
         case "email":
         case "password":
             return <TextLike control={ props.control.toLowerCase() } { ...props } />;
+
+        case "textarea":
+            return <Textarea { ...props } />;
+
 
         default:
             return <TextLike { ...props } />;
