@@ -23,10 +23,14 @@ const DropDown = styled.div`
     .list
     {
         width:100%;
-        position:absolute;
         max-height: 250px;
         overflow-y: scroll;
         background-color: var(--nav-bg);
+
+        @media screen and (min-width:768px)
+        {
+           position:absolute;
+        }
 
         li
         {
