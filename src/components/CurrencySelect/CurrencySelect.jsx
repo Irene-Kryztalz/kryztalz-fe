@@ -5,7 +5,7 @@ import classes from "./CurrencySelect.module.css";
 function CurrencySelect ( { toggle, isOpen } )
 {
     const [ curr, setCurr ] = useState( "" );
-    const { currencies, activeCurr, changeCurr } = useContext( AppContext );
+    const { currencies, activeCurr, changeCurr, rates } = useContext( AppContext );
 
     const changeHandler = ev =>
     {
@@ -19,12 +19,14 @@ function CurrencySelect ( { toggle, isOpen } )
         toggle();
     };
 
-    const filteredCurr = Object.keys( currencies ).filter( c =>
+    const filteredCurr = rates[ "NGN" ] ? Object.keys( currencies ).filter( c =>
     {
         const _curr = curr.toLowerCase();
 
         return ( c.indexOf( _curr ) > -1 ) || ( currencies[ c ].currencyName.indexOf( _curr ) > -1 ) || ( currencies[ c ].currencySymbol.indexOf( _curr ) > -1 );
-    } );
+    } ) : [ "ngn" ];
+
+
 
     return activeCurr && (
         <div className={ classes.Wrap }>

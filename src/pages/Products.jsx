@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import GemList from "../components/GemList";
 import AppContext from "../Context";
 import Filters from "../components/Filters";
@@ -49,14 +49,24 @@ function Products ()
 
     };
 
-
+    useEffect( () =>
+    {
+        if ( count )
+        {
+            setError( error => 
+            {
+                if ( error ) return null;
+                return error;
+            } );
+        }
+    }, [ count ] );
 
     return (
         <div>
             <Filters />
             <GemList items={ gems } />
 
-            {  ( count > gems.length ) &&
+            {  ( count > gems.length && !error ) &&
                 <LoadMore click={ getGems } /> }
 
             {

@@ -133,9 +133,9 @@ function OrderForm ()
             rateToCurr,
         };
 
-        console.log( order );
+        // console.log( order );
 
-        /* const {data,error} = await sendData(
+        const { data, error } = await sendData(
             {
                 endpoint: "orders",
                 formData: JSON.stringify( order ),
@@ -159,10 +159,10 @@ function OrderForm ()
         }
         else
         {
-            clearCartOrWishList(true);
-            console.log(data);
+            clearCartOrWishList( true );
+            console.log( data );
             history.push( "/products" );
-        } */
+        }
 
     };
 

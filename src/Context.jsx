@@ -38,7 +38,13 @@ class AppProvider extends Component
 
         fetch( `${ base }/shop/rates` )
             .then( res => res.json() )
-            .then( rates => this.setState( { rates } ) )
+            .then( rates => 
+            {
+                if ( !rates.error )
+                {
+                    this.setState( { rates } );
+                }
+            } )
             .catch( err => console.error( err ) );
 
 
