@@ -94,6 +94,7 @@ function OrderForm ()
         currencies,
         clearCartOrWishList,
         updateOrders,
+        orders,
 
     } = useContext( AppContext );
 
@@ -130,7 +131,7 @@ function OrderForm ()
             discount,
             deliveryAddress: address,
             description,
-            rateToCurr,
+            rateToCurr: rateToCurr || 1,
         };
 
         // console.log( order );
@@ -160,7 +161,7 @@ function OrderForm ()
         else
         {
             clearCartOrWishList( true );
-            console.log( data );
+            updateOrders( [ data, ...orders ] );
             history.push( "/products" );
         }
 

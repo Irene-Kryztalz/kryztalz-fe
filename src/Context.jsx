@@ -166,12 +166,19 @@ class AppProvider extends Component
 
     login = ( { token, cart, wishlist, expires } ) =>
     {
+        const updatedCartAndList = this.checkCartOrWishList( cart, wishlist );
+
         localStorage.setItem( 'token', token );
-        localStorage.setItem( 'cart', JSON.stringify( cart ) );
-        localStorage.setItem( 'wishlist', JSON.stringify( wishlist ) );
+        localStorage.setItem( 'cart', JSON.stringify( updatedCartAndList.cart ) );
+        localStorage.setItem( 'wishlist', JSON.stringify( updatedCartAndList.wishlist ) );
 
         localStorage.setItem( 'token-exp', expires );
-        this.setState( { isAuth: true, cart, wishlist } );
+        this.setState(
+            {
+                isAuth: true,
+                cart: updatedCartAndList.cart,
+                wishlist: updatedCartAndList.wishlist
+            } );
 
     };
 
@@ -263,24 +270,29 @@ class AppProvider extends Component
                 cart.push( { gemId: gem, quantity } );
             }
 
-            const { data } = await this.sendData(
-                {
-                    endpoint: "shop/add-cart",
-                    method: "post",
-                    formData: JSON.stringify( { gemId, quantity } ),
-                    setLoad: false,
-                    headers:
-                    {
-                        "Content-Type": "application/json"
-                    }
-                }
-            );
-
-            if ( data )
+            if ( this.isAuth )
             {
-                localStorage.setItem( "cart", JSON.stringify( cart ) );
-                this.setState( { cart } );
+                const { data } = await this.sendData(
+                    {
+                        endpoint: "shop/add-cart",
+                        method: "post",
+                        formData: JSON.stringify( { gemId, quantity } ),
+                        setLoad: false,
+                        headers:
+                        {
+                            "Content-Type": "application/json"
+                        }
+                    }
+                );
+
+                if ( data )
+                {
+                    localStorage.setItem( "cart", JSON.stringify( cart ) );
+
+                }
             }
+
+            this.setState( { cart } );
 
         }
     };
@@ -302,25 +314,30 @@ class AppProvider extends Component
                 wishlist.push( { gemId: gem } );
             }
 
-            const { data } = await this.sendData(
-                {
-                    endpoint: "shop/add-wishlist",
-                    method: "post",
-                    formData: JSON.stringify( { gemId } ),
-                    setLoad: false,
-                    headers:
-                    {
-                        "Content-Type": "application/json"
-                    }
-                }
-            );
-
-            if ( data )
+            if ( this.isAuth )
             {
+                const { data } = await this.sendData(
+                    {
+                        endpoint: "shop/add-wishlist",
+                        method: "post",
+                        formData: JSON.stringify( { gemId } ),
+                        setLoad: false,
+                        headers:
+                        {
+                            "Content-Type": "application/json"
+                        }
+                    }
+                );
 
-                localStorage.setItem( "wishlist", JSON.stringify( wishlist ) );
-                this.setState( { wishlist } );
+                if ( data )
+                {
+
+                    localStorage.setItem( "wishlist", JSON.stringify( wishlist ) );
+
+                }
             }
+
+            this.setState( { wishlist } );
 
         }
     };
@@ -343,6 +360,37 @@ class AppProvider extends Component
     updateOrders = ( orders ) =>
     {
         this.setState( { orders } );
+    };
+
+    checkCartOrWishList = ( newCart, newWishList ) =>
+    {
+        const cart = [];
+        const wishlist = [];
+
+        const mergedCart = [ ...newCart, ...this.state.cart ];
+        const mergedWL = [ ...newWishList, ...this.state.wishlist ];
+
+        mergedCart.forEach( item => 
+        {
+            const isPresent = cart.findIndex( g => g.gemId._id === item.gemId._id );
+
+            if ( isPresent === -1 )
+            {
+                cart.push( item );
+            }
+        } );
+
+        mergedWL.forEach( item => 
+        {
+            const isPresent = wishlist.findIndex( g => g.gemId._id === item.gemId._id );
+
+            if ( isPresent === -1 )
+            {
+                wishlist.push( item );
+            }
+        } );
+
+        return { cart, wishlist };
     };
 
 

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import classes from "./GemCard.module.css";
 import Button from "../Button";
 import Rates from "../Rates";
@@ -8,6 +8,7 @@ import AppContext from "../../Context";
 
 function GemCard ( props )
 {
+    const history = useHistory();
     const { name, price, image, type, _id, cutType } = props;
     const { updateWishlist, updateCart, isAuth, activeCurr, currencies } = useContext( AppContext );
 
@@ -16,11 +17,19 @@ function GemCard ( props )
     const addToWishlist = ( gem ) =>
     {
         updateWishlist( gem );
+        if ( !isAuth )
+        {
+            history.push( "/sign-in" );
+        }
     };
 
     const addToCart = ( gem ) =>
     {
         updateCart( gem, 1 );
+        if ( !isAuth )
+        {
+            history.push( "/sign-in" );
+        }
     };
 
     return (
@@ -42,57 +51,28 @@ function GemCard ( props )
 
                 <div className={ classes.Actions }>
 
-                    {
-                        isAuth
-                            ?
-                            <Button
-                                font="1rem"
-                                border="1px solid #000"
-                                margin="0 0 5px 0"
-                                pad="5px"
-                                onClick={ () => addToCart( { name, price, image, type, _id, cutType } ) }>
-                                <i className="far fa-edit"></i>
+
+                    <Button
+                        font="1rem"
+                        border="1px solid #000"
+                        margin="0 0 5px 0"
+                        pad="5px"
+                        onClick={ () => addToCart( { name, price, image, type, _id, cutType } ) }>
+                        <i className="far fa-edit"></i>
                       &nbsp;  Add to cart
                     </Button>
-                            :
-                            <Button
-                                font="1rem"
-                                border="1px solid #000"
-                                margin="0 0 5px 0"
-                                pad="5px"
-                                as={ Link }
-                                to={ `/sign-in` }>
-                                <i className="far fa-edit"></i>
-                      &nbsp;  Add to cart
-                    </Button>
-                    }
 
 
-                    {
-                        isAuth
-                            ?
-                            <Button
-                                bg="#000"
-                                color="var(--gold)"
-                                pad="5px"
-                                font="1rem"
-                                onClick={ () => addToWishlist( { name, price, image, type, _id, cutType } ) }>
-                                <i className="far fa-trash-alt"></i>
+                    <Button
+                        bg="#000"
+                        color="var(--gold)"
+                        pad="5px"
+                        font="1rem"
+                        onClick={ () => addToWishlist( { name, price, image, type, _id, cutType } ) }>
+                        <i className="far fa-trash-alt"></i>
                       &nbsp;   Add to wishlist
                     </Button>
-                            :
-                            <Button
-                                bg="#000"
-                                color="var(--gold)"
-                                pad="5px"
-                                font="1rem"
-                                as={ Link }
-                                to={ `/sign-in` }
-                            >
-                                <i className="far fa-trash-alt"></i>
-                      &nbsp;   Add to wishlist
-                    </Button>
-                    }
+
 
 
 

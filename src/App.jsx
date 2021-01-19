@@ -18,7 +18,7 @@ const Products = React.lazy( () => import( "./pages/Products" ) );
 const Cart = React.lazy( () => import( "./pages/Cart" ) );
 const Wishlist = React.lazy( () => import( "./pages/Wishlist" ) );
 const VerifyAccount = React.lazy( () => import( "./pages/VerifyAccount" ) );
-
+const Orders = React.lazy( () => import( "./pages/Orders" ) );
 
 
 
@@ -61,6 +61,11 @@ function App ()
               <Route exact path="/wishlist">
                 <ProtectedRoute>
                   <Wishlist />
+                </ProtectedRoute>
+              </Route>
+              <Route exact path="/order-history">
+                <ProtectedRoute>
+                  <Orders />
                 </ProtectedRoute>
               </Route>
               <Route exact path="/">
