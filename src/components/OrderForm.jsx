@@ -108,7 +108,6 @@ function OrderForm ()
 
     const [ applied, setApplied ] = useState( false );
     const [ error, setError ] = useState( null );
-    const symbol = activeCurr ? currencies[ activeCurr ].currencySymbol : "₦";
 
 
     const createOrder = async ( e ) =>
@@ -218,7 +217,7 @@ function OrderForm ()
 
             <div className="row">
                 <p>Total price : </p>
-                <p>{ symbol }  <Rates price={ getTotal( cart ) } /> </p>
+                <p><Rates price={ getTotal( cart ) } /> </p>
             </div>
 
             {
@@ -226,7 +225,7 @@ function OrderForm ()
 
                     <div className="row">
                         <p>Discount: </p>
-                        <p> - { symbol }  <Rates price={ details.discount } /> </p>
+                        <p> - <Rates price={ details.discount } /> </p>
                     </div>
                     :
                     <div className="row">
@@ -245,7 +244,7 @@ function OrderForm ()
 
             <div className="row">
                 <p>Amount Due: </p>
-                <p>{ symbol }  <Rates price={ getTotal( cart ) - details.discount } /> </p>
+                <p><Rates price={ getTotal( cart ) - details.discount } /> </p>
             </div>
 
 

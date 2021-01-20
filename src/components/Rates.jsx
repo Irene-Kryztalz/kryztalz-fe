@@ -4,7 +4,9 @@ import AppContext from "../Context";
 
 function Rates ( { price } ) 
 {
-    const { rates, activeCurr } = useContext( AppContext );
+    const { rates, activeCurr, currencies } = useContext( AppContext );
+    const symbol = activeCurr ? currencies[ activeCurr ].currencySymbol : "₦";
+
 
     const convertToCurrency = ( price ) => 
     {
@@ -13,8 +15,6 @@ function Rates ( { price } )
 
             const usdToNaira = +rates.NGN;
             const valueToUSD = price / usdToNaira;
-
-
 
             const valueToActiveCurr = valueToUSD * +rates[ activeCurr.toUpperCase() ];
 
@@ -25,7 +25,7 @@ function Rates ( { price } )
 
     };
 
-    return convertToCurrency( price );
+    return `${ symbol } ${ convertToCurrency( price ) }`;
 }
 
 export default Rates;

@@ -10,9 +10,8 @@ function GemCard ( props )
 {
     const history = useHistory();
     const { name, price, image, type, _id, cutType } = props;
-    const { updateWishlist, updateCart, isAuth, activeCurr, currencies } = useContext( AppContext );
+    const { updateWishlist, updateCart, isAuth } = useContext( AppContext );
 
-    const symbol = activeCurr ? currencies[ activeCurr ].currencySymbol : "₦";
 
     const addToWishlist = ( gem ) =>
     {
@@ -44,7 +43,7 @@ function GemCard ( props )
                 <div className={ classes.Info }>
                     <h3 className={ classes.Title }>{ name }</h3>
                     <p className={ classes.Price }>
-                        { symbol } { <Rates price={ price } /> } per { cutType === "none" ? "gram" : "carat" }
+                        { <Rates price={ price } /> } per { cutType === "none" ? "gram" : "carat" }
                     </p>
                     <p className={ classes.Type }>{ type }</p>
                 </div>

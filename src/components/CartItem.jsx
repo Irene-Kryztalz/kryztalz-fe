@@ -115,10 +115,6 @@ function CartItem ( props )
         gemId,
         price, updateCart } = props;
 
-    const { activeCurr, currencies } = useContext( AppContext );
-
-    const symbol = activeCurr ? currencies[ activeCurr ].currencySymbol : "₦";
-
 
     const [ qty, setQty ] = useState( quantity );
 
@@ -143,7 +139,7 @@ function CartItem ( props )
             </div>
             <div className="details">
                 <h2 className="name">Name: { name }</h2>
-                <p className="price" >Price : { symbol } { <Rates price={ qty * price } /> } </p>
+                <p className="price" >Price : <Rates price={ qty * price } /> </p>
 
                 <section className="controls">
                     <Button

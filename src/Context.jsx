@@ -80,7 +80,7 @@ class AppProvider extends Component
         this.setState( { activeCurr: curr } );
     };
 
-    sendData = async ( { endpoint, formData, method = "GET", headers, setLoad = true } ) =>
+    sendData = async ( { endpoint, formData, method = "GET", headers, setLoad = true, isBlob = false } ) =>
     {
         method = method.toUpperCase();
         if ( setLoad )
@@ -104,7 +104,7 @@ class AppProvider extends Component
                 response = await Promise.race( [ fetch( `${ url }/${ endpoint }`,
                     {
                         headers
-                    } ), new Promise( ( _, reject ) => setTimeout( () => reject( new Error( "Timeout" ) )
+                    } ), new Promise( ( _, reject ) => setTimeout( () => reject( new Error( "Timeout.Unable to get data." ) )
                         , 10000 ) ) ] );
             }
             else
@@ -120,6 +120,10 @@ class AppProvider extends Component
             if ( response.ok )
             {
                 this.setState( { loading: false } );
+                if ( isBlob )
+                {
+                    return { data: await response.blob() };
+                }
                 return { data: await response.json() };
             }
             else
