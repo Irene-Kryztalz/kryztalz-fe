@@ -1,9 +1,8 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import styled from "styled-components";
 import Field from "./Inputs/Field";
 import Button from "./Button";
 import Rates from "./Rates";
-import AppContext from "./../Context";
 
 import bg from "../assets/images/logo-mono.svg";
 

@@ -2,15 +2,25 @@ import React, { useContext, useState, useEffect } from 'react';
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import AppContext from "../Context";
-import LoadMore from "../components/LoadMore/LoadMore";
 import RetryError from "../components/RetryError";
 import Rates from "../components/Rates";
+import Button from "../components/Button";
+import LoadMore from "../components/LoadMore/LoadMore";
+//import LoadMore from "../components/SearchOrder";
 import { dateFormatter } from "../utils/formatDate";
 
 const OrdersPage = styled.div`
    width:90vw;
    max-width:1200px;
    margin: 60px auto ;
+
+
+   .heading
+   {
+       color:var(--gold);
+       margin-bottom:20px;
+       font-size:2.5em;
+   }
  
    .list
    {
@@ -18,6 +28,7 @@ const OrdersPage = styled.div`
        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
        gap:15px;
        font-size:1rem;
+       margin:20px auto;
 
        .order
        {
@@ -79,7 +90,9 @@ const OrdersPage = styled.div`
 
 function Orders ()
 {
-    const { orders, updateOrders, sendData } = useContext( AppContext );
+    const { orders, logout, updateOrders, sendData, totalOrders } = useContext( AppContext );
+    const [ error, setError ] = useState( orders.length ? null : "Unable to retrive orders." );
+
 
     useEffect( () => 
     {
@@ -95,12 +108,19 @@ function Orders ()
 
                 if ( error )
                 {
-                    console.log( error );
+                    if ( typeof error === "object" )
+                    {
+                        setError( error.error );
+                        return;
+                    }
+
+                    setError( error );
+                    return;
                 }
                 else
                 {
-                    console.log( data );
-                    updateOrders( data );
+                    setError( null );
+                    updateOrders( data.orders, data.count );
                 }
             };
             getOrders();
@@ -142,9 +162,54 @@ function Orders ()
         }
     };
 
+    const getOrders = async ( isRefresh ) =>
+    {
+        let url = "orders";
+
+        if ( orders.length && !isRefresh )
+        {
+            url = `${ url }?lastId=${ orders[ orders.length - 1 ]._id }`;
+        }
+
+        const { data, error } = await sendData(
+            {
+                endpoint: url
+            } );
+
+        if ( error )
+        {
+            if ( typeof error === "object" )
+            {
+                setError( error.error );
+                return;
+            }
+
+            if ( error.includes( "expire" ) )
+            {
+                logout();
+                return;
+            }
+
+            setError( error );
+            return;
+        }
+        else
+        {
+            setError( null );
+            if ( isRefresh )
+            {
+                updateOrders( data.orders, data.count );
+                return;
+            }
+            updateOrders( [ ...data.orders, ...orders ], data.count );
+        }
+    };
+
     return (
         <OrdersPage>
-            <h2>My orders</h2>
+            <h2 className="heading" >My orders</h2>
+
+            <Button onClick={ () => getOrders( true ) } >Refresh</Button>
 
             <section className="list">
                 {
@@ -179,7 +244,7 @@ function Orders ()
 
                             <p className="content">
 
-                                <Rates price={ order.amountDue } />
+                                <Rates curr={ order.userCurrency } asIs price={ order.amountDue / order.rateToCurr } />
 
                             </p>
 
@@ -195,13 +260,40 @@ function Orders ()
                             </p>
 
                             <div className="actions">
-                                <Link to={ `/order/${ order._id }` } >View Details</Link>
+                                <Link to={ { pathname: `/order/${ order._id }`, state: order } } >View Details</Link>
                                 <button onClick={ () => getPDF( order._id ) } >Download Invoice</button>
                             </div>
                         </article>
                     ) )
                 }
             </section>
+
+            {  ( totalOrders > orders.length && !error ) &&
+                <LoadMore click={ getOrders } /> }
+
+            {
+
+                ( totalOrders && error ) ?
+                    <RetryError
+                        message={ error }
+                        action={ getOrders }
+                        btnText="Retry" />
+                    : null
+
+            }
+
+
+            {
+                ( !totalOrders && error ) ?
+                    <RetryError
+                        message={ error }
+                        action={ getOrders }
+                        btnText="Try again" />
+                    : null
+
+            }
+
+
 
         </OrdersPage>
     );

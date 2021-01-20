@@ -50,7 +50,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: absolute;
+  position: fixed;
   top:0;
   z-index: calc(5* var(--z));
   width: 100%;

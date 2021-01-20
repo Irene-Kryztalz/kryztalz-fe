@@ -30,7 +30,7 @@ function Products ()
 
         if ( error )
         {
-            ;
+
             if ( typeof error === "object" )
             {
                 setError( error.error );

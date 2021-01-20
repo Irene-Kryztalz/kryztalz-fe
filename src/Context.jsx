@@ -18,7 +18,8 @@ class AppProvider extends Component
             baseUrl: "",
             gems: [],
             count: 0,
-            orders: []
+            orders: [],
+            totalOrders: 0
 
         };
 
@@ -58,11 +59,14 @@ class AppProvider extends Component
 
         if ( !this.state.currencies[ "ngn" ] )
         {
+
             const isAuth = this.checkExpiredToken();
-            fetch( "./currency-country.json" )
+
+            fetch( `${ process.env.PUBLIC_URL }/currency-country.json` )
                 .then( resp => resp.json() )
                 .then( curr =>
                 {
+
                     this.setState(
                         {
                             isAuth,
@@ -70,6 +74,10 @@ class AppProvider extends Component
                             currencies: this.formatData( curr )
                         }
                     );
+                } )
+                .catch( e => 
+                {
+                    console.error( e );
                 } );
         }
 
@@ -177,11 +185,12 @@ class AppProvider extends Component
         localStorage.setItem( 'wishlist', JSON.stringify( updatedCartAndList.wishlist ) );
 
         localStorage.setItem( 'token-exp', expires );
+
         this.setState(
             {
                 isAuth: true,
                 cart: updatedCartAndList.cart,
-                wishlist: updatedCartAndList.wishlist
+                wishlist: updatedCartAndList.wishlist,
             } );
 
     };
@@ -276,7 +285,7 @@ class AppProvider extends Component
 
             if ( this.isAuth )
             {
-                const { data } = await this.sendData(
+                await this.sendData(
                     {
                         endpoint: "shop/add-cart",
                         method: "post",
@@ -289,12 +298,10 @@ class AppProvider extends Component
                     }
                 );
 
-                if ( data )
-                {
-                    localStorage.setItem( "cart", JSON.stringify( cart ) );
-
-                }
             }
+
+            localStorage.setItem( "cart", JSON.stringify( cart ) );
+
 
             this.setState( { cart } );
 
@@ -320,7 +327,7 @@ class AppProvider extends Component
 
             if ( this.isAuth )
             {
-                const { data } = await this.sendData(
+                await this.sendData(
                     {
                         endpoint: "shop/add-wishlist",
                         method: "post",
@@ -332,16 +339,11 @@ class AppProvider extends Component
                         }
                     }
                 );
-
-                if ( data )
-                {
-
-                    localStorage.setItem( "wishlist", JSON.stringify( wishlist ) );
-
-                }
             }
 
             this.setState( { wishlist } );
+            localStorage.setItem( "wishlist", JSON.stringify( wishlist ) );
+
 
         }
     };
@@ -361,9 +363,12 @@ class AppProvider extends Component
 
     };
 
-    updateOrders = ( orders ) =>
+    updateOrders = ( orders, totalOrders ) =>
     {
-        this.setState( { orders } );
+        this.setState( {
+            orders,
+            totalOrders
+        } );
     };
 
     checkCartOrWishList = ( newCart, newWishList ) =>

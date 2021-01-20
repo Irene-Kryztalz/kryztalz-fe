@@ -2,14 +2,20 @@ import { useContext } from 'react';
 import AppContext from "../Context";
 
 
-function Rates ( { price } ) 
+function Rates ( { price, asIs, curr } ) 
 {
     const { rates, activeCurr, currencies } = useContext( AppContext );
-    const symbol = activeCurr ? currencies[ activeCurr ].currencySymbol : "₦";
+    const symbol = curr ? curr : ( activeCurr ? currencies[ activeCurr ].currencySymbol : "₦" );
 
 
     const convertToCurrency = ( price ) => 
     {
+        if ( asIs )
+        {
+            return new Intl.NumberFormat( 'en-NG' ).format( +price );
+
+        }
+
         if ( rates.NGN )
         {
 

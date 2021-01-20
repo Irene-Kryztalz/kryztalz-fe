@@ -160,7 +160,7 @@ function OrderForm ()
         else
         {
             clearCartOrWishList( true );
-            updateOrders( [ data, ...orders ] );
+            updateOrders( [ data, ...orders ], orders.length + 1 );
             history.push( "/products" );
         }
 
