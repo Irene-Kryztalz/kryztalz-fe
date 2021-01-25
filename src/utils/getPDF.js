@@ -9,6 +9,7 @@ export const getPDF = async ( sendData, endpoint, title ) =>
 
     if ( !error )
     {
+        console.log( 88 );
         const file = new Blob( [ data ], { type: 'application/pdf' } );
 
         const url = URL.createObjectURL( file );

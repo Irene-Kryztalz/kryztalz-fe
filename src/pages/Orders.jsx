@@ -6,8 +6,9 @@ import RetryError from "../components/RetryError";
 import Rates from "../components/Rates";
 import Button from "../components/Button";
 import LoadMore from "../components/LoadMore/LoadMore";
-//import LoadMore from "../components/SearchOrder";
+import SearchOrder from "../components/SearchOrder";
 import { dateFormatter } from "../utils/formatDate";
+import { getPDF as pdf } from "../utils/getPDF";
 
 const OrdersPage = styled.div`
    width:90vw;
@@ -90,7 +91,7 @@ const OrdersPage = styled.div`
 
 function Orders ()
 {
-    const { orders, logout, updateOrders, sendData, totalOrders } = useContext( AppContext );
+    const { orders, logout, loading, updateOrders, sendData, totalOrders } = useContext( AppContext );
     const [ error, setError ] = useState( orders.length ? null : "Unable to retrive orders." );
 
 
@@ -130,36 +131,7 @@ function Orders ()
 
     const getPDF = async ( id ) =>
     {
-        const { data, error } = await sendData(
-            {
-                endpoint: `orders/invoice/${ id }`,
-                isBlob: true
-            }
-        );
-
-        if ( !error )
-        {
-            const file = new Blob( [ data ], { type: 'application/pdf' } );
-
-            const url = URL.createObjectURL( file );
-            const a = document.createElement( 'a' );
-
-            a.href = url;
-            a.download = `${ id }-invoice.pdf`;
-
-            const clickHandler = () =>
-            {
-                setTimeout( () =>
-                {
-                    URL.revokeObjectURL( url );
-                    a.removeEventListener( 'click', clickHandler );
-                }, 150 );
-            };
-
-            a.addEventListener( 'click', clickHandler, false );
-            a.click();
-
-        }
+        pdf( sendData, `orders/invoice/${ id }`, `${ id }-invoice` );
     };
 
     const getOrders = async ( isRefresh ) =>
@@ -208,6 +180,8 @@ function Orders ()
     return (
         <OrdersPage>
             <h2 className="heading" >My orders</h2>
+
+            <SearchOrder />
 
             <Button onClick={ () => getOrders( true ) } >Refresh</Button>
 

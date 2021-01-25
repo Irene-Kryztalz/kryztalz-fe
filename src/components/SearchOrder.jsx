@@ -9,13 +9,30 @@ const Search = styled.div`
     border:1px solid var(--gold);
     padding:10px;
     display:flex;
-    justify-content:center;
+    justify-content:space-between;
     align-items:center;
     flex-direction:column;
+    color:var(--gold);
+    font-size:1.2rem;
+    .label
+    {
+        display:block
+    }
 
     @media screen and (min-width:768px)
     {
         flex-direction:row;
+        justify-content:center;
+
+        .label
+        {
+            display:inline-block;
+        }
+    }
+
+    .input
+    {
+        padding:5px;
     }
 `;
 
@@ -72,8 +89,11 @@ function SearchOrder ()
                 label="Find order by ID"
                 placeholder="order id"
                 changeHandler={ changeHandler }
+                classNamesLabel="label"
+                classNamesInput="input"
 
             />
+
 
             <Button onClick={ search } >Find</Button>
 

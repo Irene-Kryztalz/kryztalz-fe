@@ -210,7 +210,7 @@ class AppProvider extends Component
             return;
         }
 
-        if ( this.state.gems.length && items.gems.length )
+        if ( this.state.gems.length && items && items.gems.length )
         {
             const allGems = [ ...this.state.gems, ...items.gems ];
 
