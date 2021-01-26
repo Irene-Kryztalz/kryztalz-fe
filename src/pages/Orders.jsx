@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import AppContext from "../Context";
 import RetryError from "../components/RetryError";
 import Rates from "../components/Rates";
-import Button from "../components/Button";
 import LoadMore from "../components/LoadMore/LoadMore";
 import SearchOrder from "../components/SearchOrder";
 import { dateFormatter } from "../utils/formatDate";
@@ -91,7 +90,7 @@ const OrdersPage = styled.div`
 
 function Orders ()
 {
-    const { orders, logout, loading, updateOrders, sendData, totalOrders } = useContext( AppContext );
+    const { orders, logout, updateOrders, sendData, totalOrders } = useContext( AppContext );
     const [ error, setError ] = useState( orders.length ? null : "Unable to retrive orders." );
 
 
