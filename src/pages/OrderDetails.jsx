@@ -10,7 +10,7 @@ const OrderDesc = styled.div`
     background: var(--form-bg);
     width:90vw;
     max-width:700px;
-    margin: 60px auto;
+    margin: 15px auto;
     padding:10px;
     border-radius:10px;
     font-size:1.2rem;

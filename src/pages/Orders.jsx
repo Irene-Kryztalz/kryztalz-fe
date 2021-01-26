@@ -183,8 +183,6 @@ function Orders ()
 
             <SearchOrder />
 
-            <Button onClick={ () => getOrders( true ) } >Refresh</Button>
-
             <section className="list">
                 {
                     orders.map( order => (
