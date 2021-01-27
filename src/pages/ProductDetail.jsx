@@ -86,6 +86,8 @@ function ProductDetail ()
 
     useEffect( () =>
     {
+        const isValid = id.match( /^[0-9a-fA-F]{24}$/ );
+
 
         if ( !state.mounted )
         {
@@ -96,19 +98,6 @@ function ProductDetail ()
                     {
                         endpoint: `shop/gems/${ id }`
                     } );
-
-
-                if ( code && code >= 400 )
-                {
-                    setState(
-                        {
-                            error: "Bad request",
-                            gem: {},
-                            mounted: true
-
-                        } );
-                    return;
-                }
 
                 if ( code && code >= 500 )
                 {
@@ -148,7 +137,19 @@ function ProductDetail ()
 
             };
 
-            getGem();
+            if ( isValid )
+            {
+                getGem();
+            }
+            else
+            {
+                setState(
+                    {
+                        error: "Invalid id",
+                        gem: {},
+                        mounted: true
+                    } );
+            }
         }
     }, [ state, sendData, id ] );
 
