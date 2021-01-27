@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import GemCard from "./GemCard/GemCard";
 import AppContext from "../Context";
 import Button from "./Button";
@@ -54,9 +54,37 @@ const getPos = ( i, arr ) =>
     return item.style;
 };
 
+const pulse = keyframes`
+        0%,100
+        {
+            opacity:0.3
+        }
+
+        50%
+        {
+            opacity: 0.8
+        }
+`;
+
+const Loading = styled.h2`
+        width:90vw;
+        max-width:200px;
+        margin:20px auto;
+        background:var(--gold);
+        color:#000;
+        opacity:0.3;
+        text-align:center;
+        padding:10px;
+        animation: ${ pulse } 800ms infinite;
+
+
+
+`;
+
+
 const Slider = styled.div`
     width: 250px;
-    height: 100vh;
+    height:${ props => props.height ? "100vh" : "80px" };
     max-height:500px;
     margin: auto;
     position: relative;
@@ -110,6 +138,8 @@ function Carousel ()
     const [ checked, setChecked ] = useState( 0 );
     const [ arr, setArr ] = useState( getArrangement( 0, SIZE ) );
     const [ items, setItems ] = useState( [] );
+    const [ clicked, setClicked ] = useState( false );
+
 
     const change = e =>
     {
@@ -150,15 +180,37 @@ function Carousel ()
             }
         );
 
+
+        setClicked( false );
         setGems( data );
     };
 
+    const toggleClicked = () =>
+    {
+        if ( !clicked )
+        {
+            setClicked( !clicked );
+            getGems();
+        }
+    };
+
+
 
     return (
-        <Slider>
+        <Slider height={ items.length }>
 
             {
-                !gems.length && !loading && <Button onClick={ getGems }> Retry </Button>
+                !gems.length && !loading &&
+                <>
+                    <br />
+                    {
+                        !clicked ? <Button onClick={ toggleClicked }>
+                            Retry
+                </Button>
+                            : <Loading>Loding gems, please wait</Loading>
+                    }
+
+                </>
             }
 
             {

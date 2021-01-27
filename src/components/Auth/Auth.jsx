@@ -44,6 +44,7 @@ function Auth ( { fields, ...props } )
                     ) )
                 }
 
+                <br />
 
                 <Button
                     className={ joinClasses( classes.Submit, ( !props.valid ? classes.Disabled : null ) ) }

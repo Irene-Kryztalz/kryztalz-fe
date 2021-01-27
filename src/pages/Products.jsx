@@ -9,7 +9,8 @@ import RetryError from "../components/RetryError";
 function Products () 
 {
     const { count, gems, sendData, setGems } = useContext( AppContext );
-    const [ error, setError ] = useState( gems.length ? null : "Unable to load gems" );
+    const [ error, setError ] = useState( null );
+
 
     const getGems = async () =>
     {
@@ -29,6 +30,7 @@ function Products ()
 
         if ( error )
         {
+
             if ( typeof error === "object" )
             {
                 setError( error.error );
@@ -47,22 +49,31 @@ function Products ()
 
     };
 
-
     return (
         <div>
             <Filters />
             <GemList items={ gems } />
 
-            {  ( count > gems.length ) &&
+            {  ( count > gems.length && !error ) &&
                 <LoadMore click={ getGems } /> }
 
-
             {
-                error &&
+
+                ( count && error ) &&
                 <RetryError
                     message={ error }
                     action={ getGems }
                     btnText="Retry" />
+
+            }
+
+
+            {
+                ( !count && error ) &&
+                <RetryError
+                    message={ error }
+                    action={ getGems }
+                    btnText="Try again" />
 
             }
 

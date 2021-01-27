@@ -15,9 +15,12 @@ const Navigation = React.lazy( () => import( "./components/Navigation/Navigation
 const SignUp = React.lazy( () => import( "./pages/SignUp" ) );
 const SignIn = React.lazy( () => import( "./pages/SignIn" ) );
 const Products = React.lazy( () => import( "./pages/Products" ) );
+const ProductDetail = React.lazy( () => import( "./pages/ProductDetail" ) );
 const Cart = React.lazy( () => import( "./pages/Cart" ) );
 const Wishlist = React.lazy( () => import( "./pages/Wishlist" ) );
 const VerifyAccount = React.lazy( () => import( "./pages/VerifyAccount" ) );
+const Orders = React.lazy( () => import( "./pages/Orders" ) );
+const OrderDetails = React.lazy( () => import( "./pages/OrderDetails" ) );
 
 
 
@@ -49,6 +52,9 @@ function App ()
               <Route path="/products/filter">
                 <FilteredGems />
               </Route>
+              <Route exact path="/products/:id">
+                <ProductDetail />
+              </Route>
               <Route exact path="/products">
                 <Products />
               </Route>
@@ -61,6 +67,16 @@ function App ()
               <Route exact path="/wishlist">
                 <ProtectedRoute>
                   <Wishlist />
+                </ProtectedRoute>
+              </Route>
+              <Route exact path="/order-history">
+                <ProtectedRoute>
+                  <Orders />
+                </ProtectedRoute>
+              </Route>
+              <Route exact path="/order/:id">
+                <ProtectedRoute>
+                  <OrderDetails />
                 </ProtectedRoute>
               </Route>
               <Route exact path="/">

@@ -8,16 +8,25 @@ import Button from "./Button";
 const FilterSection = styled.section`
 
     display:flex;
+    margin:auto;
     margin-top:30px;
+    flex-direction:column;
     justify-content:space-evenly;
     flex-wrap:wrap;
     align-items:center;
     color:var(--gold);
     font-size:1.2rem;
+    padding:10px;
+    max-width:960px;
 
     > *
     {
         margin-top:10px;
+    }
+
+    @media screen and (min-width:768px)
+    {
+        flex-direction:row
     }
 
     

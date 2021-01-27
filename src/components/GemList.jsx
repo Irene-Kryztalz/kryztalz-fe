@@ -8,6 +8,8 @@ const List = styled.section`
     align-items:center;
     justify-content:center;
     padding: 20px 0;
+    max-width:1500px;
+    margin:auto;
 
     article
     {

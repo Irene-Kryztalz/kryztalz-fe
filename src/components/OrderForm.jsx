@@ -94,6 +94,7 @@ function OrderForm ()
         currencies,
         clearCartOrWishList,
         updateOrders,
+        orders,
 
     } = useContext( AppContext );
 
@@ -107,7 +108,6 @@ function OrderForm ()
 
     const [ applied, setApplied ] = useState( false );
     const [ error, setError ] = useState( null );
-    const symbol = activeCurr ? currencies[ activeCurr ].currencySymbol : "₦";
 
 
     const createOrder = async ( e ) =>
@@ -130,12 +130,12 @@ function OrderForm ()
             discount,
             deliveryAddress: address,
             description,
-            rateToCurr,
+            rateToCurr: rateToCurr || 1,
         };
 
-        console.log( order );
+        // console.log( order );
 
-        /* const {data,error} = await sendData(
+        const { data, error } = await sendData(
             {
                 endpoint: "orders",
                 formData: JSON.stringify( order ),
@@ -159,10 +159,10 @@ function OrderForm ()
         }
         else
         {
-            clearCartOrWishList(true);
-            console.log(data);
+            clearCartOrWishList( true );
+            updateOrders( [ data, ...orders ], orders.length + 1 );
             history.push( "/products" );
-        } */
+        }
 
     };
 
@@ -217,7 +217,7 @@ function OrderForm ()
 
             <div className="row">
                 <p>Total price : </p>
-                <p>{ symbol }  <Rates price={ getTotal( cart ) } /> </p>
+                <p><Rates price={ getTotal( cart ) } /> </p>
             </div>
 
             {
@@ -225,7 +225,7 @@ function OrderForm ()
 
                     <div className="row">
                         <p>Discount: </p>
-                        <p> - { symbol }  <Rates price={ details.discount } /> </p>
+                        <p> - <Rates price={ details.discount } /> </p>
                     </div>
                     :
                     <div className="row">
@@ -244,7 +244,7 @@ function OrderForm ()
 
             <div className="row">
                 <p>Amount Due: </p>
-                <p>{ symbol }  <Rates price={ getTotal( cart ) - details.discount } /> </p>
+                <p><Rates price={ getTotal( cart ) - details.discount } /> </p>
             </div>
 
 

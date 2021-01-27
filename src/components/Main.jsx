@@ -9,6 +9,7 @@ function Main ( { children } )
 
     useEffect( () =>
     {
+
         if ( !baseUrl )
         {
             init();

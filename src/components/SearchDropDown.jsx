@@ -10,6 +10,8 @@ const DropDown = styled.div`
     color:var(--gold);
     font-size:1.2rem;
     z-index:20;
+    max-width: 90%;
+    margin: auto;
 
     .caret
     {
@@ -23,10 +25,14 @@ const DropDown = styled.div`
     .list
     {
         width:100%;
-        position:absolute;
         max-height: 250px;
         overflow-y: scroll;
         background-color: var(--nav-bg);
+
+        @media screen and (min-width:768px)
+        {
+           position:absolute;
+        }
 
         li
         {

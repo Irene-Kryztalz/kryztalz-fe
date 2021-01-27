@@ -18,7 +18,8 @@ class AppProvider extends Component
             baseUrl: "",
             gems: [],
             count: 0,
-            orders: []
+            orders: [],
+            totalOrders: 0
 
         };
 
@@ -38,7 +39,13 @@ class AppProvider extends Component
 
         fetch( `${ base }/shop/rates` )
             .then( res => res.json() )
-            .then( rates => this.setState( { rates } ) )
+            .then( rates => 
+            {
+                if ( !rates.error )
+                {
+                    this.setState( { rates } );
+                }
+            } )
             .catch( err => console.error( err ) );
 
 
@@ -52,11 +59,14 @@ class AppProvider extends Component
 
         if ( !this.state.currencies[ "ngn" ] )
         {
+
             const isAuth = this.checkExpiredToken();
-            fetch( "./currency-country.json" )
+
+            fetch( `${ process.env.PUBLIC_URL }/currency-country.json` )
                 .then( resp => resp.json() )
                 .then( curr =>
                 {
+
                     this.setState(
                         {
                             isAuth,
@@ -64,6 +74,10 @@ class AppProvider extends Component
                             currencies: this.formatData( curr )
                         }
                     );
+                } )
+                .catch( e => 
+                {
+                    console.error( e );
                 } );
         }
 
@@ -74,7 +88,7 @@ class AppProvider extends Component
         this.setState( { activeCurr: curr } );
     };
 
-    sendData = async ( { endpoint, formData, method = "GET", headers, setLoad = true } ) =>
+    sendData = async ( { endpoint, formData, method = "GET", headers, setLoad = true, isBlob = false } ) =>
     {
         method = method.toUpperCase();
         if ( setLoad )
@@ -98,7 +112,7 @@ class AppProvider extends Component
                 response = await Promise.race( [ fetch( `${ url }/${ endpoint }`,
                     {
                         headers
-                    } ), new Promise( ( _, reject ) => setTimeout( () => reject( new Error( "Timeout" ) )
+                    } ), new Promise( ( _, reject ) => setTimeout( () => reject( new Error( "Timeout.Unable to get data." ) )
                         , 10000 ) ) ] );
             }
             else
@@ -114,6 +128,10 @@ class AppProvider extends Component
             if ( response.ok )
             {
                 this.setState( { loading: false } );
+                if ( isBlob )
+                {
+                    return { data: await response.blob() };
+                }
                 return { data: await response.json() };
             }
             else
@@ -160,12 +178,20 @@ class AppProvider extends Component
 
     login = ( { token, cart, wishlist, expires } ) =>
     {
+        const updatedCartAndList = this.checkCartOrWishList( cart, wishlist );
+
         localStorage.setItem( 'token', token );
-        localStorage.setItem( 'cart', JSON.stringify( cart ) );
-        localStorage.setItem( 'wishlist', JSON.stringify( wishlist ) );
+        localStorage.setItem( 'cart', JSON.stringify( updatedCartAndList.cart ) );
+        localStorage.setItem( 'wishlist', JSON.stringify( updatedCartAndList.wishlist ) );
 
         localStorage.setItem( 'token-exp', expires );
-        this.setState( { isAuth: true, cart, wishlist } );
+
+        this.setState(
+            {
+                isAuth: true,
+                cart: updatedCartAndList.cart,
+                wishlist: updatedCartAndList.wishlist,
+            } );
 
     };
 
@@ -184,7 +210,7 @@ class AppProvider extends Component
             return;
         }
 
-        if ( this.state.gems.length && items.gems.length )
+        if ( this.state.gems.length && items && items.gems.length )
         {
             const allGems = [ ...this.state.gems, ...items.gems ];
 
@@ -257,24 +283,27 @@ class AppProvider extends Component
                 cart.push( { gemId: gem, quantity } );
             }
 
-            const { data } = await this.sendData(
-                {
-                    endpoint: "shop/add-cart",
-                    method: "post",
-                    formData: JSON.stringify( { gemId, quantity } ),
-                    setLoad: false,
-                    headers:
-                    {
-                        "Content-Type": "application/json"
-                    }
-                }
-            );
-
-            if ( data )
+            if ( this.isAuth )
             {
-                localStorage.setItem( "cart", JSON.stringify( cart ) );
-                this.setState( { cart } );
+                await this.sendData(
+                    {
+                        endpoint: "shop/add-cart",
+                        method: "post",
+                        formData: JSON.stringify( { gemId, quantity } ),
+                        setLoad: false,
+                        headers:
+                        {
+                            "Content-Type": "application/json"
+                        }
+                    }
+                );
+
             }
+
+            localStorage.setItem( "cart", JSON.stringify( cart ) );
+
+
+            this.setState( { cart } );
 
         }
     };
@@ -286,19 +315,10 @@ class AppProvider extends Component
         if ( remove )
         {
             wishlist = wishlist.filter( g => g.gemId._id !== gemId );
-        }
-        else
-        {
-            const index = wishlist.findIndex( g => g.gemId._id === gemId );
-
-            if ( index < 0 )
-            {
-                wishlist.push( { gemId: gem } );
-            }
 
             const { data } = await this.sendData(
                 {
-                    endpoint: "shop/add-wishlist",
+                    endpoint: "shop/remove-wishlist",
                     method: "post",
                     formData: JSON.stringify( { gemId } ),
                     setLoad: false,
@@ -311,10 +331,40 @@ class AppProvider extends Component
 
             if ( data )
             {
-
                 localStorage.setItem( "wishlist", JSON.stringify( wishlist ) );
                 this.setState( { wishlist } );
             }
+
+
+        }
+        else
+        {
+            const index = wishlist.findIndex( g => g.gemId._id === gemId );
+
+            if ( index < 0 )
+            {
+                wishlist.push( { gemId: gem } );
+            }
+
+            if ( this.isAuth )
+            {
+                await this.sendData(
+                    {
+                        endpoint: "shop/add-wishlist",
+                        method: "post",
+                        formData: JSON.stringify( { gemId } ),
+                        setLoad: false,
+                        headers:
+                        {
+                            "Content-Type": "application/json"
+                        }
+                    }
+                );
+            }
+
+            this.setState( { wishlist } );
+            localStorage.setItem( "wishlist", JSON.stringify( wishlist ) );
+
 
         }
     };
@@ -334,9 +384,43 @@ class AppProvider extends Component
 
     };
 
-    updateOrders = ( orders ) =>
+    updateOrders = ( orders, totalOrders ) =>
     {
-        this.setState( { orders } );
+        this.setState( {
+            orders,
+            totalOrders
+        } );
+    };
+
+    checkCartOrWishList = ( newCart, newWishList ) =>
+    {
+        const cart = [];
+        const wishlist = [];
+
+        const mergedCart = [ ...newCart, ...this.state.cart ];
+        const mergedWL = [ ...newWishList, ...this.state.wishlist ];
+
+        mergedCart.forEach( item => 
+        {
+            const isPresent = cart.findIndex( g => g.gemId._id === item.gemId._id );
+
+            if ( isPresent === -1 )
+            {
+                cart.push( item );
+            }
+        } );
+
+        mergedWL.forEach( item => 
+        {
+            const isPresent = wishlist.findIndex( g => g.gemId._id === item.gemId._id );
+
+            if ( isPresent === -1 )
+            {
+                wishlist.push( item );
+            }
+        } );
+
+        return { cart, wishlist };
     };
 
 

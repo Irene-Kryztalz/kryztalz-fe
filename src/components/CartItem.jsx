@@ -1,9 +1,8 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import styled from "styled-components";
 import Field from "./Inputs/Field";
 import Button from "./Button";
 import Rates from "./Rates";
-import AppContext from "./../Context";
 
 import bg from "../assets/images/logo-mono.svg";
 
@@ -115,10 +114,6 @@ function CartItem ( props )
         gemId,
         price, updateCart } = props;
 
-    const { activeCurr, currencies } = useContext( AppContext );
-
-    const symbol = activeCurr ? currencies[ activeCurr ].currencySymbol : "₦";
-
 
     const [ qty, setQty ] = useState( quantity );
 
@@ -143,7 +138,7 @@ function CartItem ( props )
             </div>
             <div className="details">
                 <h2 className="name">Name: { name }</h2>
-                <p className="price" >Price : { symbol } { <Rates price={ qty * price } /> } </p>
+                <p className="price" >Price : <Rates price={ qty * price } /> </p>
 
                 <section className="controls">
                     <Button
