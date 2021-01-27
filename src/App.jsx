@@ -15,6 +15,7 @@ const Navigation = React.lazy( () => import( "./components/Navigation/Navigation
 const SignUp = React.lazy( () => import( "./pages/SignUp" ) );
 const SignIn = React.lazy( () => import( "./pages/SignIn" ) );
 const Products = React.lazy( () => import( "./pages/Products" ) );
+const ProductDetail = React.lazy( () => import( "./pages/ProductDetail" ) );
 const Cart = React.lazy( () => import( "./pages/Cart" ) );
 const Wishlist = React.lazy( () => import( "./pages/Wishlist" ) );
 const VerifyAccount = React.lazy( () => import( "./pages/VerifyAccount" ) );
@@ -50,6 +51,9 @@ function App ()
               </Route>
               <Route path="/products/filter">
                 <FilteredGems />
+              </Route>
+              <Route exact path="/products/:id">
+                <ProductDetail />
               </Route>
               <Route exact path="/products">
                 <Products />

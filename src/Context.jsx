@@ -315,6 +315,27 @@ class AppProvider extends Component
         if ( remove )
         {
             wishlist = wishlist.filter( g => g.gemId._id !== gemId );
+
+            const { data } = await this.sendData(
+                {
+                    endpoint: "shop/remove-wishlist",
+                    method: "post",
+                    formData: JSON.stringify( { gemId } ),
+                    setLoad: false,
+                    headers:
+                    {
+                        "Content-Type": "application/json"
+                    }
+                }
+            );
+
+            if ( data )
+            {
+                localStorage.setItem( "wishlist", JSON.stringify( wishlist ) );
+                this.setState( { wishlist } );
+            }
+
+
         }
         else
         {

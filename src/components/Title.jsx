@@ -14,10 +14,10 @@ const StyledP = styled.p`
 `;
 
 
-function Title ( { content } )
+function Title ( { content, className } )
 {
     return (
-        <StyledP>
+        <StyledP className={ className } >
             {content }
         </StyledP>
     );

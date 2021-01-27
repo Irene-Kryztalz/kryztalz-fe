@@ -84,7 +84,7 @@ function GemCard ( props )
                     color="var(--gold)"
                     as={ Link }
                     radius="5px"
-                    to={ `/product/${ _id }` } >
+                    to={ `/products/${ _id }` } >
                     Read more...
                  </Button>
 

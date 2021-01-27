@@ -10,6 +10,8 @@ const DropDown = styled.div`
     color:var(--gold);
     font-size:1.2rem;
     z-index:20;
+    max-width: 90%;
+    margin: auto;
 
     .caret
     {

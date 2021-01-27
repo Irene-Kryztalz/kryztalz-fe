@@ -8,6 +8,7 @@ import Button from "./Button";
 const FilterSection = styled.section`
 
     display:flex;
+    margin:auto;
     margin-top:30px;
     flex-direction:column;
     justify-content:space-evenly;
@@ -15,6 +16,8 @@ const FilterSection = styled.section`
     align-items:center;
     color:var(--gold);
     font-size:1.2rem;
+    padding:10px;
+    max-width:960px;
 
     > *
     {

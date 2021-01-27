@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import GemList from "../components/GemList";
 import AppContext from "../Context";
 import Filters from "../components/Filters";
@@ -9,7 +9,7 @@ import RetryError from "../components/RetryError";
 function Products () 
 {
     const { count, gems, sendData, setGems } = useContext( AppContext );
-    const [ error, setError ] = useState( gems.length ? null : "Unable to retrive gems." );
+    const [ error, setError ] = useState( null );
 
 
     const getGems = async () =>
@@ -48,18 +48,6 @@ function Products ()
         }
 
     };
-
-    useEffect( () =>
-    {
-        if ( count )
-        {
-            setError( error => 
-            {
-                if ( error ) return null;
-                return error;
-            } );
-        }
-    }, [ count ] );
 
     return (
         <div>
