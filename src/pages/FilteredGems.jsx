@@ -1,23 +1,13 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { useHistory, useLocation } from "react-router-dom";
-import styled from "styled-components";
-import GemList from "../components/GemList";
 import { parse } from "query-string";
 import AppContext from "../Context";
+import GemList from "../components/GemList";
 import Filters from "../components/Filters";
 import LoadMore from "../components/LoadMore/LoadMore";
+import Header from "../components/Header";
 import RetryError from "../components/RetryError";
 
-
-const Header = styled.h3`
-    text-align:center;
-    background:var(--form-bg);
-    color:var(--gold);
-    max-width:90%;
-    margin: 10px auto;
-    padding: 10px;
-
-`;
 
 
 function FilterPage () 
@@ -57,6 +47,7 @@ function FilterPage ()
 
         const { data, error } = await sendData(
             {
+                setLoad: results.gems.length ? false : true,
                 endpoint: url
             }
         );
@@ -165,7 +156,7 @@ function FilterPage ()
             }
 
             <GemList items={ results.gems } />
-            {  ( results.count > results.gems.length ) &&
+            {  ( results.count > results.gems.length ) && !results.error &&
                 <LoadMore click={ filter } />
             }
 

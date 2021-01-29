@@ -144,7 +144,8 @@ function Orders ()
 
         const { data, error } = await sendData(
             {
-                endpoint: url
+                endpoint: url,
+                setLoad: orders.length ? false : true
             } );
 
         if ( error )
