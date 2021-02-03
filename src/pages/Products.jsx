@@ -4,7 +4,14 @@ import AppContext from "../Context";
 import Filters from "../components/Filters";
 import LoadMore from "../components/LoadMore/LoadMore";
 import RetryError from "../components/RetryError";
+import Button from "../components/Button";
 
+const btnStyle =
+{
+    display: "block",
+    width: "110px",
+    margin: "20px auto"
+};
 
 function Products () 
 {
@@ -52,6 +59,11 @@ function Products ()
     return (
         <div>
             <Filters />
+
+            <br />
+            <Button style={ btnStyle } onClick={ getGems }>
+                <i className="fas fa-sync"></i> &nbsp; Refresh
+                </Button>
             <GemList items={ gems } />
 
             {  ( count > gems.length && !error ) &&

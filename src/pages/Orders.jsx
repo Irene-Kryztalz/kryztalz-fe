@@ -91,13 +91,13 @@ const OrdersPage = styled.div`
 function Orders ()
 {
     const { orders, logout, updateOrders, sendData, totalOrders } = useContext( AppContext );
-    const [ error, setError ] = useState( orders.length ? null : "Unable to retrive orders." );
+    const [ mounted, setMounted ] = useState( false );
+    const [ error, setError ] = useState( null );
 
 
     useEffect( () => 
     {
-
-        if ( !orders.length )
+        if ( !mounted )
         {
             const getOrders = async () =>
             {
@@ -122,11 +122,12 @@ function Orders ()
                     setError( null );
                     updateOrders( data.orders, data.count );
                 }
+                setMounted( true );
             };
             getOrders();
 
         }
-    }, [ orders, sendData, updateOrders ] );
+    }, [ sendData, updateOrders, mounted ] );
 
     const getPDF = async ( id ) =>
     {
@@ -245,7 +246,7 @@ function Orders ()
 
             {
 
-                ( totalOrders && error ) ?
+                ( totalOrders && error && mounted ) ?
                     <RetryError
                         message={ error }
                         action={ getOrders }
@@ -256,7 +257,7 @@ function Orders ()
 
 
             {
-                ( !totalOrders && error ) ?
+                ( !totalOrders && error && mounted ) ?
                     <RetryError
                         message={ error }
                         action={ getOrders }
