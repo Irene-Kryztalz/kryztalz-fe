@@ -239,7 +239,7 @@ class AppProvider extends Component
         return diff > 0 ? true : false;
     };
 
-    updateCart = async ( gem, quantity, remove = false ) =>
+    updateCart = async ( gem, quantity = 1, remove = false ) =>
     {
         const gemId = gem._id;
         let cart = [ ...this.state.cart ];

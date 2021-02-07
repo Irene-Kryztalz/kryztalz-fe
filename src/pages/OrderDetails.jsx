@@ -88,6 +88,11 @@ const OrderDesc = styled.div`
         }
     }
 
+    .mb
+    {
+        margin-bottom:5px;
+    }
+
     .table
     {
         width: 100%;
@@ -259,6 +264,10 @@ function OrderDetails ()
             <div className="field">
                 <p className="bold">Amount Due : </p>
                 <p>{ formatPrice( state.amountDue / state.rateToCurr, state.userCurrency ) }</p>
+            </div>
+
+            <div className="field mb">
+                <p className="bold">Items Purchased : </p>
             </div>
 
             <table className="table">

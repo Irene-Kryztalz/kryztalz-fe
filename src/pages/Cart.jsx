@@ -1,10 +1,9 @@
 import React, { useContext } from 'react';
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 import AppContext from "../Context";
 import CartItem from "../components/CartItem";
-import Button from "../components/Button";
 import OrderForm from "../components/OrderForm";
+import Back from "../components/Back";
 
 
 const Header = styled.h2`
@@ -54,10 +53,6 @@ const CartSection = styled.div`
     }
 `;
 
-const Back = styled.div`
-    max-width:250px;
-    margin: 20px 6%;
-`;
 
 
 function Cart ()
@@ -114,14 +109,7 @@ function Cart ()
 
             </CartSection>
 
-            <Back>
-
-                <Button to="/products" as={ Link } >
-
-                    <i className="fas fa-long-arrow-alt-left fa-lg"></i> &nbsp;
-                <span>Continue shopping</span>
-                </Button>
-            </Back>
+            <Back />
 
         </>
     );

@@ -12,7 +12,7 @@ import { getPDF as pdf } from "../utils/getPDF";
 const OrdersPage = styled.div`
    width:90vw;
    max-width:1200px;
-   margin: 60px auto ;
+   margin: 50px auto ;
 
 
    .heading
