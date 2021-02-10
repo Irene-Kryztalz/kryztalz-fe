@@ -32,7 +32,7 @@ function MobileNav ( { menuOpen, search, close, currMenuOpen, toggleCurrMenu, to
                     search ?
                         <>
                             <SearchInput />
-                            <button className={ classes.ToggleSearch } onClick={ toggleSearch }>
+                           -- <button className={ classes.ToggleSearch } onClick={ toggleSearch }>
                                 <i className="fas fa-times"></i>
                             </button>
                         </> :

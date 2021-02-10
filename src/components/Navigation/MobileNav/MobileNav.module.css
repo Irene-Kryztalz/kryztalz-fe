@@ -33,6 +33,7 @@
     display: inline-block;
     margin-right: 10px;
     font-size: 1.15rem;
+    min-height: 10px;
 }
 
 

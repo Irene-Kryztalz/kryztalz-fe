@@ -12,7 +12,7 @@ import { getPDF as pdf } from "../utils/getPDF";
 const OrdersPage = styled.div`
    width:90vw;
    max-width:1200px;
-   margin: 60px auto ;
+   margin: 50px auto ;
 
 
    .heading
@@ -83,6 +83,11 @@ const OrdersPage = styled.div`
                }
            }
 
+        .empty
+        {
+            color:var(--gold);
+            text-align:center;
+        }
        }
    }
 
@@ -182,7 +187,7 @@ function Orders ()
         <OrdersPage>
             <h2 className="heading" >My orders</h2>
 
-            <SearchOrder />
+            {orders.length ? <SearchOrder /> : <h3 className="empty">No order history</h3> }
 
             <section className="list">
                 {
