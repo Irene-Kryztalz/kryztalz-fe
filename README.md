@@ -1,4 +1,4 @@
-# Kryztalz Admin
+# Kryztalz
 
 Hosted on netlify [![Netlify Status](https://api.netlify.com/api/v1/badges/030c71b9-3077-4da1-b02b-1aa32ab0d743/deploy-status)](https://app.netlify.com/sites/kryztalz/deploys)
 
