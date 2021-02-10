@@ -27,6 +27,7 @@ function GemList ( { items } )
                     { ...g }
                     key={ g._id }
                     image={ g.imageUrls[ 0 ] }
+                    imageUrls={ g.imageUrls }
 
 
                 /> )
