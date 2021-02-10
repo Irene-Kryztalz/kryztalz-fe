@@ -207,7 +207,7 @@ function Carousel ()
                         !clicked ? <Button onClick={ toggleClicked }>
                             Retry
                 </Button>
-                            : <Loading>Loding gems, please wait</Loading>
+                            : <Loading>Loading gems, please wait</Loading>
                     }
 
                 </>
