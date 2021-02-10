@@ -10,6 +10,7 @@ const List = styled.section`
         padding:20px 10px;
         font-family: 'Crimson Pro', serif;
         font-size:1rem;
+        max-width:450px
 
         @media screen and (min-width:680px)
         {

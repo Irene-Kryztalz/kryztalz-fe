@@ -11,6 +11,7 @@ const Card = styled.article`
     gap:10px;
     grid-template-columns: 30% 70%;
     position:relative;
+    max-width: 450px;
     
  
     img

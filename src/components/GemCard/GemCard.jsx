@@ -9,9 +9,8 @@ import AppContext from "../../Context";
 function GemCard ( props )
 {
     const history = useHistory();
-    const { name, price, image, type, _id, cutType } = props;
+    const { name, price, image, imageUrls, type, _id, cutType } = props;
     const { updateWishlist, updateCart, isAuth } = useContext( AppContext );
-
 
     const addToWishlist = ( gem ) =>
     {
@@ -56,7 +55,7 @@ function GemCard ( props )
                         border="1px solid #000"
                         margin="0 0 5px 0"
                         pad="5px"
-                        onClick={ () => addToCart( { name, price, image, type, _id, cutType } ) }>
+                        onClick={ () => addToCart( { name, price, imageUrls, type, _id, cutType } ) }>
                         <i className="far fa-edit"></i>
                       &nbsp;  Add to cart
                     </Button>
@@ -67,7 +66,7 @@ function GemCard ( props )
                         color="var(--gold)"
                         pad="5px"
                         font="1rem"
-                        onClick={ () => addToWishlist( { name, price, image, type, _id, cutType } ) }>
+                        onClick={ () => addToWishlist( { name, price, imageUrls, type, _id, cutType } ) }>
                         <i className="far fa-trash-alt"></i>
                       &nbsp;   Add to wishlist
                     </Button>
